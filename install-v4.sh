@@ -28,11 +28,11 @@
 
 # Compile bcftools, bowtie and samtools
 
-cd htslib
+cd ./htslib
 make clean
 make
 
-cd bcftools-1.3.1 
+cd ../bcftools-1.3.1 
 make clean
 make
 
@@ -83,7 +83,7 @@ cd ../..
 
 # Change permissions to the easymap folder and subfolders so Easymap can be used both from the
 # web interface (server user -- e.g. www-data) and the command line of any user
-sudo chmod 777 . --recursive
+sudo chmod -R 777 .
 
 
 # In file easymap, set absolute path to the Python binaries of the virtual environment
@@ -101,7 +101,7 @@ run_result=`./easymap -n setup -w snp -sim -r check -g check.gff -ed ref_bc_parm
 # Cleanup
 rm -rf user_data/check.gff
 rm -rf user_data/1.check.fa 
-rm -rf user_projects/*
+#rm -rf user_projects/*
 
 if [ "$run_result" == "Easymap analysis properly completed." ]; then
 	echo " "
