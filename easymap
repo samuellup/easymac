@@ -1,4 +1,4 @@
-#!ABS_PATH_ENV_PYTHON
+#!/var/www/html/easymap/src/Python-2.7.12/.localpython/bin/python2
 
 # ./easymap -n project_name -w snp -sim -r at -g chr1+4.gff -rs ref -cr bc -co par_mut -sm 600 -sr 0,14-1,31-2,33-3,15-4,5-5,2/0,24-1,42-2,25-3,6-4,1-5,2+1,5860210+100 -ss 25+100,0+500,100+1+50+se
 # ./easymap -n ins-test -w ins -sim -r at2 -i at_chloroplast.fa -g chr1+4.gff -sm 10 -ss 15+100,0+500,100+1+50+pe
@@ -534,18 +534,18 @@ else:
 	stringency = "n/p"
 
 # This code checks the configuration of the program. It calls allow-new-project.py and checks its result.
-proc = subprocess.Popen("ABS_PATH_ENV_PYTHON allow-new-project.py", cwd=r'./config', shell=True, stdout=subprocess.PIPE)
+proc = subprocess.Popen("/var/www/html/easymap/src/Python-2.7.12/.localpython/bin/python2 allow-new-project.py", cwd=r'./config', shell=True, stdout=subprocess.PIPE)
 script_response = proc.stdout.read()
 response = script_response.split(",")
 try:
 	if int(response[0]) >= 100:
-		error = 1; problems.append("The number of gigabytes in the folder /user_projects exceeds the maximum allowed in the config/config file ("+response[2].strip()+")")
+		error = 1; problems.append("The number of gigabytes in the folders /user_data and /user_projects exceeds the maximum allowed in the /config/config file ("+response[2].strip()+" Gb)")
 except:
 	error = 1; problems.append(response[0])
 try:
 	int(response[1])
 	if int(response[1]) >= 100:
-		error = 1; problems.append("The number of projects currently running exceeds the maximum allowed in the config/config file ("+response[3].strip()+") [Manually killed projects can be interpreted as running by easymap. This can be solved by removing the project folder]")
+		error = 1; problems.append("The number of projects currently running exceeds the maximum allowed in the config/config file ("+response[3].strip()+" project) [Manually killed projects can be interpreted as running by easymap. This can be solved by removing the project folder]")
 except:
 	error = 1; problems.append(response[1])
 
