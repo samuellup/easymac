@@ -1,4 +1,4 @@
-#!/var/www/html/easymap/src/Python-2.7.12/.localpython/bin/python2
+#!/var/www/html/easymap2/src/Python-2.7.12/.localpython/bin/python2
 
 # ./easymap -n project_name -w snp -sim -r at -g chr1+4.gff -rs ref -cr bc -co par_mut -sm 600 -sr 0,14-1,31-2,33-3,15-4,5-5,2/0,24-1,42-2,25-3,6-4,1-5,2+1,5860210+100 -ss 25+100,0+500,100+1+50+se
 # ./easymap -n ins-test -w ins -sim -r at2 -i at_chloroplast.fa -g chr1+4.gff -sm 10 -ss 15+100,0+500,100+1+50+pe
@@ -173,7 +173,7 @@ if len(ref_seq.split(" ")) != 1:
 
 if fasta_name_has_bad_format == False:
 	# Check if there are .fa files in the directory user_data that have the string provided by the user as basename
-	refs_in_input_files = fnmatch.filter(input_files, '*'+ref_seq+'.fa') # fnmatch filters a list using a string that accepts wildcards
+	refs_in_input_files = fnmatch.filter(input_files, ref_seq + '*.[Ff][Aa]') # fnmatch filters a list using a string that accepts wildcards
 	refs_in_input_files.sort()
 	if not refs_in_input_files:
 		error = 1
@@ -534,7 +534,7 @@ else:
 	stringency = "n/p"
 
 # This code checks the configuration of the program. It calls allow-new-project.py and checks its result.
-proc = subprocess.Popen("/var/www/html/easymap/src/Python-2.7.12/.localpython/bin/python2 allow-new-project.py", cwd=r'./config', shell=True, stdout=subprocess.PIPE)
+proc = subprocess.Popen("/var/www/html/easymap2/src/Python-2.7.12/.localpython/bin/python2 allow-new-project.py", cwd=r'./config', shell=True, stdout=subprocess.PIPE)
 script_response = proc.stdout.read()
 response = script_response.split(",")
 try:

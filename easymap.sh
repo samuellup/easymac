@@ -283,4 +283,5 @@ fi
 echo $(date)": Execution of project {" $project_name "} finished." >> $my_log_file
 echo 'status:finished' >> $my_status_file
 
+# This message must remain as is because install.sh relies on it to know whether the installation was successfull or not.
 echo "Easymap analysis properly completed."
