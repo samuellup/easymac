@@ -47,10 +47,12 @@ make
 cd ..
 
 ################################################################################
+# Create src directory 
+if [ -d src ]; then rm -rf src; fi
+mkdir src
+cd src
 
 # Get Python-2.7.12
-[ -d src ] || mkdir src
-cd src
 wget https://www.python.org/ftp/python/2.7.12/Python-2.7.12.tgz
 tar -zxvf Python-2.7.12.tgz
 
@@ -109,7 +111,7 @@ if [ "$run_result" == "Easymap analysis properly completed." ]; then
 	echo "###################################################################################"
 	echo "#                                                                                 #"
 	echo "#                                                                                 #"
-	echo "#                   Easymap installation susccesfuly completed                    #"
+	echo "#                   Easymap installation successfully completed                   #"
 	echo "#                                                                                 #"
 	echo "#                                                                                 #"
 	echo "###################################################################################"
