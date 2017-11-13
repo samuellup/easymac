@@ -95,14 +95,14 @@ sed -i -e "s~ABS_PATH_ENV_PYTHON~${PWD}/src/Python-2.7.12/.localpython/bin/pytho
 
 
 # Finally we check if Easymap functions properly by running a small project: 
-cp fonts/1.check.fa user_data/
+cp fonts/check.1.fa user_data/
 cp fonts/check.gff user_data/
 
 run_result=`./easymap -n setup -w snp -sim -r check -g check.gff -ed ref_bc_parmut`
 
 # Cleanup
 rm -rf user_data/check.gff
-rm -rf user_data/1.check.fa 
+rm -rf user_data/check.1.fa 
 #rm -rf user_projects/*
 
 if [ "$run_result" == "Easymap analysis properly completed." ]; then
