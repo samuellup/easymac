@@ -267,6 +267,10 @@ if workflow == "ins":
 
 #If the user chooses to simulate reads:  
 if data_source == "sim":
+	
+	# Check that JSON exists
+	try: f = open('./simulator/sim_parameters.json', 'r'); f.close()
+	except: error = 1; problems.append("JSON file not found. Please review your JSON input file.")
 
 	#Parse JSON file
 	try:
