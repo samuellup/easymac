@@ -667,10 +667,14 @@ if mut_type == 'lin':
 
 				past_ins = ins[0]
 
-		output.write(
-		'		<left> <img class="img" src="gene_legend_ins.png" align="middle" >  </left>' + '\n'
-		'		<br>' + '\n'
-		)
+
+		for f in sorted(files):
+			if 'gene_plot_lin' in str(f):
+				output.write(
+				'		<left> <img class="img" src="gene_legend_ins.png" align="middle" >  </left>' + '\n'
+				'		<br>' + '\n'
+				)
+				break
 
 		#Link to images 
 		output.write(

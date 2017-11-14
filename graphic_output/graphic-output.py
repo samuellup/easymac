@@ -52,3 +52,4 @@ elif args.my_mut == 'lin':
 	#Gene gene_plot
 	gene_plot()
 
+#gene_legend()
