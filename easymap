@@ -411,7 +411,7 @@ if data_source == "sim":
 			
 			if workflow == "ins":
 				sim_recsel = "n/p"
-
+				control_parental = "n/p"
 			#sim_seq 1+100,0+500,100+1+50+se           
 			if len(sim_parameters["SimSeq"]) == 8 :
 
