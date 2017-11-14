@@ -2,7 +2,7 @@
 
 #from __future__ import division
 import argparse
-from draw import fa_vs_pos, insertions_overview_and_histograms, gene_plot, legend, candidates_zoom
+from draw import fa_vs_pos, insertions_overview_and_histograms, gene_plot, legend, candidates_zoom, gene_legend
 parser = argparse.ArgumentParser()
 
 #INPUT VARIABLES FOR SNP
@@ -19,7 +19,6 @@ parser.add_argument('-gff', action="store", dest = 'gff')				#Genome feature fil
 parser.add_argument('-m', action="store", dest = 'mode', default = 'pe')
 parser.add_argument('-ins_pos', action="store", dest = 'ins_pos')
 
-
 #SHARED VARIABLES
 parser.add_argument('-iva', action="store", dest = 'input_va')	 		#Output de varanalyzer
 parser.add_argument('-rrl', action="store", dest = 'rrl') 				#Regulatory region lenght
@@ -29,18 +28,9 @@ args = parser.parse_args()
 project = args.project_name
 
 
-if args.my_mut == 'af_control':
+if args.my_mut == 'af_control' or args.my_mut == 'af_sample' or args.my_mut == 'af_candidates' :
 	#FA vs POS image
 	fa_vs_pos()
-
-if args.my_mut == 'af_sample':
-	#FA vs POS image
-	fa_vs_pos()
-
-if args.my_mut == 'af_candidates':
-	#FA vs POS image
-	fa_vs_pos()
-
 
 if args.my_mut == 'snp':
 	#FA vs POS image

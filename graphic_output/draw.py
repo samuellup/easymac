@@ -1,6 +1,5 @@
 # This script contains the functions used for drawing the programs output images. The functions are called from graphic-output.py when they are needed. 
 
-
 import argparse, math
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from StringIO import StringIO
@@ -28,7 +27,6 @@ parser.add_argument('-ins_pos', action="store", dest = 'ins_pos')
 
 args = parser.parse_args()
 project = args.project_name
-
 
 def red(p):
 	if len(str(p)) <= 3:
@@ -630,6 +628,60 @@ def legend():
 	draw.rectangle( [w+38, h+274, w+44, h+266], fill=None, outline=(0,0,0) )
 
 	im.save(project + '/3_workflow_output/legend.png')
+
+
+#############################################################################################################
+#																											#
+# 											Gene plot - LEGEND												#
+#																											#
+#############################################################################################################
+
+def gene_legend():
+
+	wide = 250
+	high = 230
+
+	im = Image.new("RGB", (wide, high), (255,255,255))
+	draw = ImageDraw.Draw(im)
+	fnt2 = ImageFont.truetype('fonts/VeraMono.ttf', 14)
+
+	w = 10
+	h = 10
+	length = high - 10
+	width = wide - 10
+
+	#legend box
+	draw.line((w, h) + (width, h), fill=256, width=1)
+	draw.line((w, h) + (w, length), fill=256, width=1)
+	draw.line((width, length) + (width, h), fill=256, width=1)
+	draw.line((w, length) + (width, length), fill=256, width=1)
+
+	#legend items
+	draw.text((w+20, h+20), 'Legend:', font=fnt2, fill=(0,0,0,255))
+	
+	draw.line((w+30, h+60) + (w+44, h+60), fill=(59, 119, 214), width=9)
+	draw.text((w+60, h+52), 'Exon', font=fnt2, fill=(0,0,0,255))
+
+	draw.line((w+30, h+90) + (w+44, h+90), fill=(188, 209, 242), width=9)
+	draw.text((w+60, h+82), 'UTR', font=fnt2, fill=(0,0,0,255))
+
+	draw.line((w+30, h+120) + (w+44, h+120), fill=(14, 54, 119), width=2)
+	draw.text((w+60, h+112), 'Intron', font=fnt2, fill=(0,0,0,255))
+
+	draw.line((w+30, h+150) + (w+34, h+150), fill=(14, 54, 119), width=2)
+	draw.line((w+40, h+150) + (w+44, h+150), fill=(14, 54, 119), width=2)
+	draw.text((w+60, h+142), 'Putative promoter', font=fnt2, fill=(0,0,0,255))
+
+	# SNP arrow
+	#draw.line((w+37, h+180+4+1) + (w+37, h+180-4+1), fill=(255, 0, 0), width=3)
+	#draw.polygon( (w+37-4, h+180-5+2) + (w+37+4, h+180-5+2) +  (w+37, h+180-5-5+2), fill=(255,0,0))
+	#draw.text((w+60, h+172), 'Variant position', font=fnt2, fill=(0,0,0,255))
+
+	# Ins triangle
+	draw.polygon((w+37-7, h+180+4) + (w+37+7, h+180+4) +  (w+37, h+180-5-5+2), fill=(255,0,0))
+	draw.text((w+60, h+172), 'Insertion site', font=fnt2, fill=(0,0,0,255))
+
+	im.save(project + '/3_workflow_output/gene_legend_ins.png')
 
 
 #############################################################################################################

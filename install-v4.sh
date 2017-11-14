@@ -101,8 +101,8 @@ cp fonts/check.gff user_data/
 run_result=`./easymap -n setup -w snp -sim -r check -g check.gff -ed ref_bc_parmut`
 
 # Cleanup
-rm -rf user_data/check.gff
-rm -rf user_data/check.1.fa 
+rm  user_data/check.gff
+rm  user_data/check.1.fa 
 #rm -rf user_projects/*
 
 if [ "$run_result" == "Easymap analysis properly completed." ]; then
