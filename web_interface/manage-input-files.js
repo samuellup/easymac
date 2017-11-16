@@ -16,7 +16,7 @@ function filesInfo() {
 			document.getElementById("filesInfo").innerHTML = this.responseText;
 		}
 	};
-	xmlhttp.open("GET", "manage-input-files-list-files.php", true);
+	xmlhttp.open("GET", "cgi-bin/manage-input-files-list-files.py?f=fffff", true);
 	xmlhttp.send();
 }
 
@@ -37,7 +37,7 @@ function removeFile(fileName) {
 			filesInfo()
 		}
 	};
-	xmlhttp.open("GET", "manage-input-files-removeFile.php?f="+fileName, true);
+	xmlhttp.open("GET", "manage-input-files-removeFile.py?f="+fileName, true);
 	xmlhttp.send();
 }
 
@@ -51,7 +51,7 @@ window.onload = function() {
 */
 
 window.onload = function() {
-
+	/*
 	//////////////////////////////////////////////////
 	// Here starts plupload js code to upload files //
 	//////////////////////////////////////////////////
@@ -105,7 +105,7 @@ window.onload = function() {
 	////////////////////////////////////////////////
 	// Here ends plupload js code to upload files //
 	////////////////////////////////////////////////
-	
+	*/
 	
 	// Call filesInfo() when page loads
 	filesInfo();
