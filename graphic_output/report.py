@@ -667,6 +667,15 @@ if mut_type == 'lin':
 
 				past_ins = ins[0]
 
+
+		for f in sorted(files):
+			if 'gene_plot_lin' in str(f):
+				output.write(
+				'		<left> <img class="img" src="gene_legend_ins.png" align="middle" >  </left>' + '\n'
+				'		<br>' + '\n'
+				)
+				break
+
 		#Link to images 
 		output.write(
 		'		<br><a href="report_images.zip" target="_blank">Click to download all image files</a>' + '\n'
@@ -825,8 +834,6 @@ if mut_type == 'snp':
 		output.write(
 		'		<h2>Candidate variants</h2>' + '\n'
 		'		<p>This section contains a list of the candidate mutations affecting gene open reading frames.</p>' + '\n'
-
-
 			) 
 		for var in variants_list:
 			gene_name = var[6].split(' (')[0]
@@ -886,6 +893,11 @@ if mut_type == 'snp':
 					'		<br>' + '\n'
 
 					)
+
+		output.write(
+		'		<left> <img class="img" src="gene_legend_snp.png" align="middle" >  </left>' + '\n'
+		'		<br>' + '\n'
+		)
 
 		#Link to images 
 		output.write(

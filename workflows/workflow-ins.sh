@@ -530,7 +530,9 @@ fi
 
 
 #Report generation
+
 {
+	cp $location/fonts/gene_legend_ins.png $f3/gene_legend_ins.png
 	zip $f3/report_images.zip $f3/*.png > $f2/zip.txt
 } || {
 	echo $(date)': Error during zip compression of report images. Please check that the zip program is installed in your system. Continuing anyway.' >> $my_log_file
