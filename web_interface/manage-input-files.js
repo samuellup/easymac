@@ -37,7 +37,7 @@ function removeFile(fileName) {
 			filesInfo()
 		}
 	};
-	xmlhttp.open("GET", "manage-input-files-removeFile.py?f="+fileName, true);
+	xmlhttp.open("GET", "cgi-bin/manage-input-files-removeFile.py?f="+fileName, true);
 	xmlhttp.send();
 }
 

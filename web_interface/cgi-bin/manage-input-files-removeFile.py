@@ -5,15 +5,10 @@ cgitb.enable()
 
 #form = cgi.FieldStorage()
 
-print "Content-type:text/html\r\n\r\n" 
-print "" 
-
 arguments = cgi.FieldStorage()
-for i in arguments.keys():
-	if i == 'f':
-		print arguments[i].value
+file = str(arguments['f'].value).strip()
 
-
+os.remove(file)
 
 '''
 <?php
