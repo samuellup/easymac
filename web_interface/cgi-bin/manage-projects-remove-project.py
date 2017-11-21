@@ -1,6 +1,6 @@
 #!../src/Python-2.7.12/.localpython/bin/python2
 
-import cgi, cgitb
+import cgi, cgitb, os
 cgitb.enable()
 
 #form = cgi.FieldStorage()

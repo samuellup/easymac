@@ -53,7 +53,7 @@ else:
 				"""	</div> """
 				"""	<div class="files-item right2"> """
 				"""		<form> """
-				"""			<input style="margin: 3 0 7px 0" type="button" class="button" onclick="ShowRemoveFile(\' $"""+user_input_file_full_name+""" \')" value="Remove from disk" /> """
+				"""			<input style="margin: 3 0 7px 0" type="button" class="button" onclick="ShowRemoveFile( """+user_input_file_full_name+""" )" value="Remove from disk" /> """
 				"""		</form> """
 				"""	</div> """
 				"""	<div id="rmFile_ """+user_input_file_full_name+""" " style="display:none;"> """
