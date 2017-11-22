@@ -1,22 +1,15 @@
 #!../src/Python-2.7.12/.localpython/bin/python2
 
 import cgi, cgitb, os
-cgitb.enable()
+cgitb.enable() # For debugging only
 
-#form = cgi.FieldStorage()
+# Set Content-type header so XMLHttpRequest in JS can understand the response
+print "Content-Type: text/html"
+print ""
 
+# Get the f argument from the URL
 arguments = cgi.FieldStorage()
-file = str(arguments['f'].value).strip()
-os.remove(file)
+fileName = str(arguments['f'].value).strip()
 
-'''
-<?php
-
-$file = $_GET['f'];
-
-$command = 'rm ../user_data/'. $file;
-
-shell_exec($command);
-
-?>
-'''
+# Remove the file stored in f
+os.remove('../user_data/' + fileName)

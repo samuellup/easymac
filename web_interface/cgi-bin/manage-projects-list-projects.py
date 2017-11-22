@@ -22,7 +22,6 @@ def get_size(start_path):
             total_size += os.path.getsize(fp)
     return total_size
 
-
 # Re-populate list with filename, size tuples
 for i in xrange(len(dirpaths)):
     dirpaths[i] = (dirpaths[i], get_size(dirpaths[i]))
@@ -39,8 +38,6 @@ def convert_size(size_bytes):
 
 # Fill html file
 print "Content-type:text/html\r\n\r\n" 
-
-
 
 
 if len(dirpaths)==0:
@@ -60,79 +57,67 @@ else:
 			status='Status file not available'
 
 		if status != 'Status file not available':
-			print(
-
-				'''
+			print '''
 				<div style="background-color:#79e59d; border:solid green 1px; border-radius:5px; padding:10px;">
 					
-					<h4>Project: ''' + project + '''</h4>
-					Project status: ''' + status + '''<br>
-					Project size: ''' + folder_size + '''<br>
-					
-					
+					<h4>Project: '''+ project +'''</h4>
+					Project status:''' + status +'''<br>
+					Project size:''' + folder_size +'''<br>
 					<div class="managing-buttons">
-						
-
-					<a href="cgi-bin/view-log.py?p=''' + project + '''" class="button">View log file</a>
-					
-					'''
-					)
+						<a href="cgi-bin/view-log.py?p='''+ project +'''" class="button">View log file</a>		
+			'''
 
 			if status == 'finished':
 				print '''<a href="cgi-bin/view-report.py?p=''' + project + '''" class="button">View report</a> '''
 				
 			if status == 'running':
-				print '''<form><input type="button" class="button" onclick="displayStopProject(''' + project + ''')" value="Stop execution" /></form>'''
+				print '''<form><input type="button" class="button" onclick="displayStopProject(\''''+ project +'''\')" value="Stop execution" /></form>'''
 
 			if status != 'running':
-				print '''<form><input type="button" class="button" onclick="displayRemoveProject(''' + project + ''')" value="Remove from disk" /></form>'''
+				print '''<form><input type="button" class="button" onclick="displayRemoveProject(\''''+ project +'''\')" value="Remove from disk" /></form>'''
 
 			print '</div>'
 
 
-			print (
-				'''
-				<div id="stopPrj_''' + project + '''" style="display:none;">
+			print '''
+				<div id="stopPrj_'''+ project +'''" style="display:none">
 					Are you sure you want to stop running this project?
 					<form>
-						<input type="button" onclick="stopProject(''' + project + ''')" value="Confirm"/>
-						<input type="button" onclick="hideStopProject(''' + project + ''')" value="Cancel"/>
+						<input type="button" onclick="stopProject(\''''+ project +'''\')" value="Confirm"/>
+						<input type="button" onclick="hideStopProject(\''''+ project +'''\')" value="Cancel"/>
 					</form>
 				</div>
 
-				<div id="rmPrj_''' + project + '''" style="display:none;">
+				<div id="rmPrj_'''+ project +'''" style="display:none;">
+					Are you sure you want to permanently remove this project from disk? (Your input data will not be removed).
+					<form>
+						<input type="button" onclick="removeProject(\''''+ project +'''\')" value="Confirm"/>
+						<input type="button" onclick="hideRemoveProject(\''''+ project +'''\')" value="Cancel"/>
+					</form>
+				</div>
+			'''
+
+		else:
+			print '''
+				<div style="background-color:#79e59d; border:solid green 1px; border-radius:5px; padding:10px;">
+
+				<h4>Project: '''+ project +'''</h4>
+
+
+
+				Project status: The status file of this project could not be found on the server. Please delete this project and rerun it.<br>
+				<div class="managing-buttons">
+				<form><input type="button" class="button" onclick="displayRemoveProject(''' + project + ''')" value="Remove from disk" /></form>
+				</div>
+
+				<div id="rmPrj_''' + project + '''" style="display:none">
 					Are you sure you want to permanently remove this project from disk? (Your input data will not be removed).
 					<form>
 						<input type="button" onclick="removeProject(''' + project + ''')" value="Confirm"/>
 						<input type="button" onclick="hideRemoveProject(''' + project + ''')" value="Cancel"/>
 					</form>
 				</div>
-				'''
-				)
-
-		else:
-			print(
 			'''
-			<div style="background-color:#79e59d; border:solid green 1px; border-radius:5px; padding:10px;">
-
-			<h4>Project: ''' + project + '''</h4>
-
-
-
-			Project status: The status file of this project could not be found on the server. Please delete this project and rerun it.<br>
-			<div class="managing-buttons">
-			<form><input type="button" class="button" onclick="displayRemoveProject(''' + project + ''')" value="Remove from disk" /></form>
-			</div>
-
-			<div id="rmPrj_''' + project + '''" style="display:none;">
-				Are you sure you want to permanently remove this project from disk? (Your input data will not be removed).
-				<form>
-					<input type="button" onclick="removeProject(''' + project + ''')" value="Confirm"/>
-					<input type="button" onclick="hideRemoveProject(''' + project + ''')" value="Cancel"/>
-				</form>
-			</div>
-			'''
-			)
 		
 		print '</div><br>'
 

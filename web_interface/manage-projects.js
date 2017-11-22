@@ -81,7 +81,7 @@ function removeProject(projectName) {
 			projectsInfo();
 		}
 	};
-	xmlhttp.open("GET", "cgi-bin/manage-projects-remove-project.py?p="+projectName, true);
+	xmlhttp.open("GET", "cgi-bin/manage-projects-remove-project.py?p="+ projectName, true);
 	xmlhttp.send();
 }
 

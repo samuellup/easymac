@@ -16,7 +16,7 @@ function filesInfo() {
 			document.getElementById("filesInfo").innerHTML = this.responseText;
 		}
 	};
-	xmlhttp.open("GET", "cgi-bin/manage-input-files-list-files.py?f=fffff", true);
+	xmlhttp.open("GET", "cgi-bin/manage-input-files-list-files.py", true);
 	xmlhttp.send();
 }
 
@@ -37,21 +37,13 @@ function removeFile(fileName) {
 			filesInfo()
 		}
 	};
-	xmlhttp.open("GET", "cgi-bin/manage-input-files-removeFile.py?f="+fileName, true);
+	xmlhttp.open("GET", "cgi-bin/manage-input-files-removeFile.py?f="+ fileName, true);
 	xmlhttp.send();
 }
 
-/*
-window.onload = function() {
-	// Call filesInfo() when page loads
-	filesInfo();
-	// Call function filesInfo() every 50 seconds to update files status regularly
-	setInterval(filesInfo, 1000);
-}
-*/
 
 window.onload = function() {
-	/*
+	
 	//////////////////////////////////////////////////
 	// Here starts plupload js code to upload files //
 	//////////////////////////////////////////////////
@@ -60,17 +52,20 @@ window.onload = function() {
 		runtimes : 'html5,flash,silverlight,html4',
 		browse_button : 'pickfiles', // you can pass an id...
 		container: document.getElementById('container'), // ... or DOM Element itself
-		url : 'manage-input-files-upload.php',
+		url : 'cgi-bin/manage-input-files-upload.py',
+		chunk_size: '10mb',
+    	max_retries: 3,
 		flash_swf_url : 'plupload-2.3.1/js/Moxie.swf',
 		silverlight_xap_url : 'plupload-2.3.1/js/Moxie.xap',
 	
 		filters : {
-			max_file_size : '100gb',
+			max_file_size : '200gb',
 			mime_types: [
 				{title : "GFF files", extensions : "gff,gff3"},
 				{title : "Gene annotation files", extensions : "txt"},
 				{title : "FASTA files", extensions : "fa"},
-				{title : "FASTQ files", extensions : "fq,fastq"}
+				{title : "FASTQ files", extensions : "fq,fastq"},
+				{title : "gzipped files", extensions : "gz"}
 			]
 		},
 
@@ -105,7 +100,7 @@ window.onload = function() {
 	////////////////////////////////////////////////
 	// Here ends plupload js code to upload files //
 	////////////////////////////////////////////////
-	*/
+	
 	
 	// Call filesInfo() when page loads
 	filesInfo();
