@@ -90,7 +90,7 @@ sudo chmod -R 777 .
 
 # In file easymap, set absolute path to the Python binaries of the virtual environment
 # Rest of Pyhton scripts don't need this because are executed after easymap.sh activates the virtual environment
-sed -i -e "s~ABS_PATH_ENV_PYTHON~${PWD}/src/Python-2.7.12/.localpython/bin/python2~g" easymap
+#sed -i -e "s~ABS_PATH_ENV_PYTHON~${PWD}/src/Python-2.7.12/.localpython/bin/python2~g" easymap
 
 
 
