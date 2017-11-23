@@ -58,11 +58,13 @@ else:
 
 		if status != 'Status file not available':
 			print '''
-				<div style="background-color:#79e59d; border:solid green 1px; border-radius:5px; padding:10px;">
-					
+				<!-- <div style="background-color:#79e59d; border:solid green 1px; border-radius:5px; padding:10px;"> -->
+				<!-- <div style="background-color:rgb(250,250,250); box-shadow: 0px 0px 5px 5px rgb(220,220,220); border-radius:5px; padding:13px 15px 15px 25px;"> -->
+				<div style="background-color: #77d197; border-top: 4px solid rgb(130,130,130); border-radius: 0 0 5px 5px; padding:13px 15px 15px 25px;">
+
 					<h4>Project: '''+ project +'''</h4>
-					Project status:''' + status +'''<br>
-					Project size:''' + folder_size +'''<br>
+					Project status: ''' + status +'''<br>
+					Project size: ''' + folder_size +'''<br><br>
 					<div class="managing-buttons">
 						<a href="cgi-bin/view-log.py?p='''+ project +'''" class="button">View log file</a>		
 			'''
@@ -77,7 +79,6 @@ else:
 				print '''<form><input type="button" class="button" onclick="displayRemoveProject(\''''+ project +'''\')" value="Remove from disk" /></form>'''
 
 			print '</div>'
-
 
 			print '''
 				<div id="stopPrj_'''+ project +'''" style="display:none">

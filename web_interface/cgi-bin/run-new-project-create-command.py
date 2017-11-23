@@ -1,54 +1,41 @@
+#!../src/Python-2.7.12/.localpython/bin/python2
 
+import cgi, cgitb, subprocess
+cgitb.enable()
 
+arguments = cgi.FieldStorage()
 
-'''
-<?php
+print 'Content-type:text/html\r\n\r\n'
 
-/*
-This file creates the command with info from javascript (user interface) and tells the shell to run
-easymap.sh (the master .sh program to run easymap workflows)
+cmdString = str(arguments['program'].value) + ' ' + \
+			str(arguments['project_name'].value) + ' ' + \
+			str(arguments['workflow'].value) + ' ' + \
+			str(arguments['data_source'].value) + ' ' + \
+			str(arguments['ref_seq'].value) + ' ' + \
+			str(arguments['ins_seq'].value) + ' ' + \
+			str(arguments['gff_file'].value) + ' ' + \
+			str(arguments['ann_file'].value) + ' ' + \
+			str(arguments['read_s'].value) + ' ' + \
+			str(arguments['read_f'].value) + ' ' + \
+			str(arguments['read_r'].value) + ' ' + \
+			str(arguments['lib_type_sample'].value) + ' ' + \
+			str(arguments['read_s_ctrl'].value) + ' ' + \
+			str(arguments['read_f_ctrl'].value) + ' ' + \
+			str(arguments['read_r_ctrl'].value) + ' ' + \
+			str(arguments['lib_type_ctrl'].value) + ' ' + \
+			str(arguments['is_ref_strain'].value) + ' ' + \
+			str(arguments['cross_type'].value) + ' ' + \
+			str(arguments['snp_analysis_type'].value) + ' ' + \
+			str(arguments['control_parental'].value) + ' ' + \
+			str(arguments['sim_mut'].value) + ' ' + \
+			str(arguments['sim_recsel'].value) + ' ' + \
+			str(arguments['sim_seq'].value) + ' ' + \
+			str(arguments['stringency'].value)
 
-Warning: If easymap.sh is run from php, the user is www-data (the apache server). Therefore www-data
-must have permission to read and write in the appropriate folders.
-*/
+# For testing only
+#cmdString = './easymap.sh test ins sim nano pbinprok2.fa complete.gff TAIR10_gene_info.txt n/p n/p n/p se n/p n/p n/p se n/p n/p n/p n/p 1+li n/p 10+100,0+500,100+1+50+se n/p'
 
-// Send 200 OK to close the client request before easymap execution finishes
-// (https://stackoverflow.com/questions/15273570/continue-processing-php-after-sending-http-response)
+subprocess.Popen(cmdString, cwd=r'../', shell=True, stdout=subprocess.PIPE)
 
-//ignore_user_abort(true);
-//ob_start();
-// do initial processing here
-//echo $response; // send the response
-header("HTTP/1.1 200 OK");
-//header('Connection: close');
-//header('Content-Length: '.ob_get_length());
-ob_end_flush();
-ob_flush();
-flush();
-
-// Now handle user request
-
-// Handle client data in JSON format
-//header("Content-Type: application/json");
-
-// build a PHP variable from JSON sent using POST method
-//$cmdArray = json_decode(stripslashes(file_get_contents("php://input")));
-$cmdArray = json_decode(file_get_contents("php://input"));
-
-// Elaborate the command string
-//$refSeqsString = implode("+", $cmdArray[4]);
-//$cmdArray[4] = $refSeqsString;
-$cmdString = implode(" ", $cmdArray);
-
-// Run workflow
-// Add another argument that equals to "server" at the end of the command
-shell_exec('cd ..; '. $cmdString .' server');
-
-// Only for development
-//$file = fopen('file.txt', 'w');
-//fwrite($file, $cmdString);
-//fclose($file);
-
-
-?>
-'''
+# Sent to the client. JS function that triggers this script print it to console
+print cmdString

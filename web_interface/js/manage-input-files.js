@@ -53,7 +53,7 @@ window.onload = function() {
 		browse_button : 'pickfiles', // you can pass an id...
 		container: document.getElementById('container'), // ... or DOM Element itself
 		url : 'cgi-bin/manage-input-files-upload.py',
-		chunk_size: '10mb',
+		chunk_size: '50mb',
     	max_retries: 3,
 		flash_swf_url : 'plupload-2.3.1/js/Moxie.swf',
 		silverlight_xap_url : 'plupload-2.3.1/js/Moxie.xap',

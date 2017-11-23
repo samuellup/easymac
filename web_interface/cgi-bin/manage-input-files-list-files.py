@@ -4,7 +4,6 @@ import os, cgi, cgitb, math
 cgitb.enable()
 
 dirname = '../user_data'
-arguments = cgi.FieldStorage()
 
 # Get list of files
 filepaths = []
@@ -57,7 +56,7 @@ else:
 							<input style="margin: 3 0 7px 0" type="button" class="button" onclick="ShowRemoveFile(\'''' + user_input_file + '''\')" value="Remove from disk" />
 						</form>
 					</div>
-					<div id="rmFile_'''+ user_input_file +'''" style="display:none">
+					<div id="rmFile_'''+ user_input_file +'''" style="display:none; clear:both;">
 						Are you sure you want to permanently remove this file from disk?
 						<form>
 							<input type="button" onclick="removeFile(\''''+ user_input_file +'''\')" value="Confirm" />

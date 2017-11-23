@@ -1,6 +1,6 @@
 /*
 This .js file simply calls PHP files via AJAX
-easymap.htm --> ajax.js --> fire-wf.php --> easymap.sh --> log.log --> read_log.php ... 
+easymap.htm --> ajax.js --> xxx.py --> easymap.sh --> log.log --> read_log.php ... 
 
 */
 
@@ -767,13 +767,62 @@ window.onload = function() {
 		window.location.assign("manage-projects.php");
 	}
 
-	// Function to trigger a new easymap execution and to redirect browser to manage-projects.php 
+	// Function to trigger a new easymap execution and to redirect browser to manage-projects.htm
 	function runProject() {
+		var http = new XMLHttpRequest();
+		var url = "cgi-bin/run-new-project-create-command.py";
+
+		// Create POST string to send
+		var argsStringToPost = "program=" + cmdArgs[0] +
+							   "&project_name=" + cmdArgs[1] +
+							   "&workflow=" + cmdArgs[2] +
+							   "&data_source=" + cmdArgs[3] +
+							   "&ref_seq=" + cmdArgs[4] +
+							   "&ins_seq=" + cmdArgs[5] +
+							   "&gff_file=" + cmdArgs[6] +
+							   "&ann_file=" + cmdArgs[7] +
+							   "&read_s=" + cmdArgs[8] +
+							   "&read_f=" + cmdArgs[9] +
+							   "&read_r=" + cmdArgs[10] +
+							   "&lib_type_sample=" + cmdArgs[11] +
+							   "&read_s_ctrl=" + cmdArgs[12] +
+							   "&read_f_ctrl=" + cmdArgs[13] +
+							   "&read_r_ctrl=" + cmdArgs[14] +
+							   "&lib_type_ctrl=" + cmdArgs[15] +
+							   "&is_ref_strain=" + cmdArgs[16] +
+							   "&cross_type=" + cmdArgs[17] +
+							   "&snp_analysis_type=" + cmdArgs[18] +
+							   "&control_parental=" + cmdArgs[19] +
+							   "&sim_mut=" + cmdArgs[20] +
+							   "&sim_recsel=" + cmdArgs[21] +
+							   "&sim_seq=" + cmdArgs[22] +
+							   "&stringency=" + cmdArgs[23];
+		
+		http.open("POST", url, true);
+		// Request header
+		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+		http.onreadystatechange = function() {//Call a function when the state changes.
+		    if(http.readyState == 4 && http.status == 200) {
+		        console.log(http.responseText);
+		    }
+		}
+		// Send request
+		http.send(argsStringToPost);
+		// Redirect browser to projects page
+		goToManageProjects()
+	}
+
+	/* OLD WAYS OF RUNNING NEW PROJECT
+	// Function to trigger a new easymap execution and to redirect browser to manage-projects.htm 
+	function runProject() {
+		var cmdArgs = ['aaa', 'bbb', 'ccc'];
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "run-new-project-create-command.php", true);
+		xhr.open("POST", "run-new-project-create-command.py", true);
 		xhr.setRequestHeader("Content-type", "application/json");
 		xhr.send(JSON.stringify(cmdArgs));
-		/* Maybe desirable: A way to check if the request was processed correctly by php
+		console.log('clicked');
+		//Maybe desirable: A way to check if the request was processed correctly by php
 		xhr.onreadystatechange = function () {
 		    if (xhr.readyState === 4 && xhr.status === 200) {
 		        if (this.responseText == 'success') {
@@ -783,12 +832,9 @@ window.onload = function() {
 		        }
 		    }
 		};
-		*/
-
-		goToManageProjects();		
+		//goToManageProjects();		
 	}
 
-	/* OLD WAY OF RUNNING NEW PROJECT
 	<a href="manage-projects.htm" class="button" onclick="runProject()">Run workflow</a>
 
 	function runProject() {
@@ -807,7 +853,7 @@ window.onload = function() {
 	}
 	*/
 
-	// End of functions *******************************************************************************************************************
+	// End of functions ***************************************************************************************************
 	
 	
 	// Define array with all the command arguments
@@ -815,7 +861,7 @@ window.onload = function() {
 					'read_s','read_f','read_r','lib_type_sample',
 					'read_s_ctrl','read_f_ctrl','read_r_ctrl','lib_type_ctrl',
 					'is_ref_strain','cross_type','snp_analysis_type','control_parental',
-					'sim_mut','sim_recsel','sim_seq'];
+					'sim_mut','sim_recsel','sim_seq','stringency'];
 */	
 	var cmdArgs = ['./easymap.sh','n/p','n/p','n/p','n/p','n/p','n/p','n/p',
 					'n/p','n/p','n/p','n/p',
@@ -874,7 +920,7 @@ window.onload = function() {
 	document.getElementById("checkFormButton").onclick = commandFinalCheck;
 
 	// React to interactions with button to run project
-	document.getElementById("runProjectButton").onclick = runProject;
+	document.getElementById("runProjectButton2").onclick = runProject;
 }
 
 
