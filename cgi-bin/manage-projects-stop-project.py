@@ -9,6 +9,84 @@ print "Content-Type: text/html"
 print ""
 
 
+arguments = cgi.FieldStorage()
+projectName = str(arguments['p'].value).strip()
+
+# Default PID values
+pid_easymap = 0
+pid_simulator = 0
+pid_simulator = 0
+
+# Fill PID values
+with open('./user_projects/'+projectName+'/2_logs/status') as status_file:
+	for line in status_file.readlines():
+		if line.startswith('pid easymap'): 
+			pid_easymap = str(line.split('easymap')[1]).strip()
+			
+		if line.startswith('pid simulator'): 
+			pid_simulator = str(line.split('simulator')[1]).strip()
+		
+		if line.startswith('pid workflow'): 
+			pid_workflow = str(line.split('workflow')[1]).strip()
+		
+
+simulator_children = [
+	'sim-mut.py',
+	'sim-recsel.py',
+	'sim-seq.py'
+	]
+
+workflow_children = [
+	'bowtie2-build-s',
+	'bowtie2-align-s',
+	'samtools',
+	'bcftools',
+	'draw.py',
+	'draw.pyc',
+	'graphic-output.py',
+	'local-analysis.py',
+	'paired-analysis.py',
+	'filter1.py',
+	'filter2.py',
+	'sam-file-check.py',
+	'sort.py',
+	'ins-to-varanalyzer.py',
+	'af-comparison.py',
+	'map-mutation.py',
+	'variants-filter.py',
+	'vcf-groomer.py',
+	'variants-operations.py',
+	'snp-to-varanalyzer.py',
+	'varanalyzer.py'
+	]
+
+for child in simulator_children:
+	command = 'kill -9 -P ' + pid_simulator + ' ' + child
+	subprocess.call(command, shell=True)
+	with open('probatina.tina.txt', 'a') as out: out.write(command)
+
+for child in workflow_children:
+	command = 'kill -9 -P ' + pid_simulator + ' ' + child
+	subprocess.call(command, shell=True)
+
+
+
+'''
+command = 'kill -9' + pid_simulator
+
+try:
+	subprocess.call(command, shell=True)
+	with open('probatina.tina.txt', 'w') as out: out.write("yassss")
+
+except:
+	with open('probatina.tina.txt', 'w') as out: out.write("FAIL")
+'''
+
+
+
+
+
+
 
 '''
 with open('probatina.tina.txt', 'w') as out:
