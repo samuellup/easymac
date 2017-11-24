@@ -20,7 +20,7 @@ function projectsInfo() {
 		}
 	};
 	
-	xmlhttp.open("GET", "cgi-bin/manage-projects-list-projects.py", true);
+	xmlhttp.open("GET", "../cgi-bin/manage-projects-list-projects.py", true);
 	xmlhttp.send();
 }
 
@@ -58,7 +58,7 @@ function stopProject(projectName) {
 			projectsInfo();
 		}
 	};
-	xmlhttp.open("GET", "cgi-bin/manage-projects-stop-project.py?p="+projectName, true);
+	xmlhttp.open("GET", "../cgi-bin/manage-projects-stop-project.py?p="+projectName, true);
 	xmlhttp.send();
 }
 
@@ -81,7 +81,7 @@ function removeProject(projectName) {
 			projectsInfo();
 		}
 	};
-	xmlhttp.open("GET", "cgi-bin/manage-projects-remove-project.py?p="+ projectName, true);
+	xmlhttp.open("GET", "../cgi-bin/manage-projects-remove-project.py?p="+ projectName, true);
 	xmlhttp.send();
 }
 
