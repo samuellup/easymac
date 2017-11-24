@@ -44,7 +44,7 @@ if len(dirpaths)==0:
 		print '<div class="emptyResult">There are no projects currently on the server. To start a new one go to "Run new project".</div>'
 
 else:
-	for f in reversed(dirpaths):
+	for f in reversed(sorted(dirpaths, key=lambda x: x[0])):
 		project = str(f[0].split('user_projects/')[1])
 		folder_size = convert_size(int(f[1]))
 		try:
