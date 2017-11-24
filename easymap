@@ -542,7 +542,7 @@ script_response = proc.stdout.read()
 response = script_response.split(",")
 try:
 	if int(response[0]) >= 100:
-		error = 1; problems.append("The number of gigabytes in the folders /user_data and /user_projects exceeds the maximum allowed in the /config/config file ("+response[2].strip()+" Gb)")
+		error = 1; problems.append("The number of gigabytes in the folders /user_data and /user_projects exceeds the maximum allowed in the /config/config file ("+response[2].strip()+" Gb).")
 except:
 	error = 1; problems.append(response[0])
 try:

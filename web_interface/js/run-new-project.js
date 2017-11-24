@@ -30,9 +30,10 @@ function allowNewProject() {
 				document.getElementById("simultWarning").style.display = "block";
 				document.getElementById("simultWarning").innerHTML = "WARNING: You have reached the maximum number of simultaneously running projects set by the machine administrator (" + responseFields[3] + " projects). Wait until currently running jobs finish.";
 			}
+			console.log(responseFields[0] + ', ' + responseFields[1]);
 		}
 	};
-	xmlhttp.open("GET", "allow-new-project.php", true);
+	xmlhttp.open("GET", "../cgi-bin/run-new-project-allow-adaptor.py", true);
 	xmlhttp.send();
 }
 
