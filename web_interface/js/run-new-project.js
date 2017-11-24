@@ -30,10 +30,10 @@ function allowNewProject() {
 				document.getElementById("simultWarning").style.display = "block";
 				document.getElementById("simultWarning").innerHTML = "WARNING: You have reached the maximum number of simultaneously running projects set by the machine administrator (" + responseFields[3] + " projects). Wait until currently running jobs finish.";
 			}
-			console.log(responseFields[0] + ', ' + responseFields[1]);
+			console.log(response);
 		}
 	};
-	xmlhttp.open("GET", "../cgi-bin/run-new-project-allow-adaptor.py", true);
+	xmlhttp.open("GET", "../cgi-bin/run-new-project-allow-new.py", true);
 	xmlhttp.send();
 }
 
@@ -102,7 +102,7 @@ function listInputFiles() {
 			}
 		}
 	};
-	xmlhttp.open("GET", "run-new-project-listInputFiles.php", true);
+	xmlhttp.open("GET", "../cgi-bin/run-new-project-listInputFiles.py", true);
 	xmlhttp.send();
 }
 
@@ -124,6 +124,7 @@ function HasDuplicates(array) {
 
 // Trigger required functions when page loads
 allowNewProject();
+console.log('dws')
 listInputFiles()
 
 function resetTextField() {
