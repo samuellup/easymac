@@ -139,7 +139,7 @@ my_status_file=$project_name/$f2/status
 touch $my_status_file
 chmod 666 $my_status_file
 echo 'status:running' >> $my_status_file
-echo 'pid easymap '$BASHPID >> $my_status_file
+echo 'pid easymap '$$ >> $my_status_file
 
 # Check that the folders /user_data and /user_data/gnm_ref exist. If they do not, 
 if ! [ -d $f0 ]; then
