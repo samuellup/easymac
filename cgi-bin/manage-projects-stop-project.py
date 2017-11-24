@@ -1,4 +1,23 @@
-#!../src/Python-2.7.12/.localpython/bin/python2
+#!./src/Python-2.7.12/.localpython/bin/python2
+
+
+import cgi, cgitb, os, subprocess
+cgitb.enable() # For debugging only
+
+# Set Content-type header so XMLHttpRequest in JS can understand the response
+print "Content-Type: text/html"
+print ""
+
+
+
+'''
+with open('probatina.tina.txt', 'w') as out:
+	out.write('hellou')
+
+command = 'mkdir trapppp'
+
+subprocess.call(command, shell=True)
+'''
 
 
 
