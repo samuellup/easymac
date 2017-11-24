@@ -1,4 +1,4 @@
-#!../src/Python-2.7.12/.localpython/bin/python2
+#!./src/Python-2.7.12/.localpython/bin/python2
 
 import cgi, cgitb, os
 cgitb.enable() # For debugging only
@@ -12,4 +12,4 @@ arguments = cgi.FieldStorage()
 fileName = str(arguments['f'].value).strip()
 
 # Remove the file stored in f
-os.remove('../user_data/' + fileName)
+os.remove('./user_data/' + fileName)

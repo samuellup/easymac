@@ -44,11 +44,11 @@ if len(dirpaths)==0:
 		print '<div class="emptyResult">There are no projects currently on the server. To start a new one go to "Run new project".</div>'
 
 else:
-	for f in dirpaths:
+	for f in reversed(dirpaths):
 		project = str(f[0].split('user_projects/')[1])
 		folder_size = convert_size(int(f[1]))
 		try:
-			with open('../user_projects/'+project+'/2_logs/status') as status_file:
+			with open('./user_projects/'+project+'/2_logs/status') as status_file:
 				for line in reversed(status_file.readlines()):
 					if line.startswith('status:'): 
 						status = str(line.split(':')[1]).strip()
@@ -104,18 +104,16 @@ else:
 
 				<h4>Project: '''+ project +'''</h4>
 
-
-
 				Project status: The status file of this project could not be found on the server. Please delete this project and rerun it.<br>
 				<div class="managing-buttons">
-				<form><input type="button" class="button" onclick="displayRemoveProject(''' + project + ''')" value="Remove from disk" /></form>
+				<form><input type="button" class="button" onclick="displayRemoveProject(\''''+ project +'''\')" value="Remove from disk" /></form>
 				</div>
 
-				<div id="rmPrj_''' + project + '''" style="display:none">
+				<div id="rmPrj_'''+ project +'''" style="display:none;">
 					Are you sure you want to permanently remove this project from disk? (Your input data will not be removed).
 					<form>
-						<input type="button" onclick="removeProject(''' + project + ''')" value="Confirm"/>
-						<input type="button" onclick="hideRemoveProject(''' + project + ''')" value="Cancel"/>
+						<input type="button" onclick="removeProject(\''''+ project +'''\')" value="Confirm"/>
+						<input type="button" onclick="hideRemoveProject(\''''+ project +'''\')" value="Cancel"/>
 					</form>
 				</div>
 			'''

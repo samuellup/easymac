@@ -1,9 +1,9 @@
-#!../src/Python-2.7.12/.localpython/bin/python2
+#!./src/Python-2.7.12/.localpython/bin/python2
 
 import os, cgi, cgitb, math
 cgitb.enable()
 
-dirname = '../user_data'
+dirname = './user_data'
 
 # Get list of files
 filepaths = []
@@ -38,7 +38,6 @@ else:
 	print '<hr class="files-separator"></hr>'
 	for f in filepaths:
 		user_input_file = str(f[0].split('user_data/')[1])
-		user_input_file_full_name =  str(f[0])
 		file_size = convert_size(int(f[1]))
 		print '''
 				<div id="file_'''+ user_input_file +'''">
@@ -49,7 +48,7 @@ else:
 						<h4>'''+ file_size +'''</h4>
 					</div>
 					<div class="files-item right1">
-						<a href="cgi-bin/manage-input-files-retrieve-header.py?f='''+ user_input_file_full_name +'''" target="_blank" class="button" style="width:100px">Preview</a>
+						<a href="../cgi-bin/manage-input-files-retrieve-header.py?f='''+ user_input_file +'''" target="_blank" class="button" style="width:100px">Preview</a>
 					</div>
 					<div class="files-item right2">
 						<form>

@@ -1,4 +1,4 @@
-#!../src/Python-2.7.12/.localpython/bin/python2
+#!./src/Python-2.7.12/.localpython/bin/python2
 
 import cgi, cgitb, shutil
 cgitb.enable() # For debugging only
@@ -12,5 +12,5 @@ arguments = cgi.FieldStorage()
 directory = str(arguments['p'].value).strip()
 
 # Remove the directory stored in p
-shutil.rmtree('../user_projects/' + directory)
+shutil.rmtree('./user_projects/' + directory)
 #shutil.rmtree('../user_projects/' + directory, ignore_errors=True) # Usefull with read-only files?

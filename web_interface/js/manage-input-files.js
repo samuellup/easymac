@@ -16,7 +16,7 @@ function filesInfo() {
 			document.getElementById("filesInfo").innerHTML = this.responseText;
 		}
 	};
-	xmlhttp.open("GET", "cgi-bin/manage-input-files-list-files.py", true);
+	xmlhttp.open("GET", "../cgi-bin/manage-input-files-list-files.py", true);
 	xmlhttp.send();
 }
 
@@ -37,7 +37,7 @@ function removeFile(fileName) {
 			filesInfo()
 		}
 	};
-	xmlhttp.open("GET", "cgi-bin/manage-input-files-removeFile.py?f="+ fileName, true);
+	xmlhttp.open("GET", "../cgi-bin/manage-input-files-removeFile.py?f="+ fileName, true);
 	xmlhttp.send();
 }
 
@@ -52,7 +52,7 @@ window.onload = function() {
 		runtimes : 'html5,flash,silverlight,html4',
 		browse_button : 'pickfiles', // you can pass an id...
 		container: document.getElementById('container'), // ... or DOM Element itself
-		url : 'cgi-bin/manage-input-files-upload.py',
+		url : '../cgi-bin/manage-input-files-upload.py',
 		chunk_size: '50mb',
     	max_retries: 3,
 		flash_swf_url : 'plupload-2.3.1/js/Moxie.swf',

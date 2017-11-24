@@ -1,4 +1,4 @@
-#!../src/Python-2.7.12/.localpython/bin/python2
+#!./src/Python-2.7.12/.localpython/bin/python2
 
 import cgi, cgitb
 cgitb.enable()
@@ -13,14 +13,14 @@ c=0
 # Header
 print(
 	"""
-	<p>File: """ + fileName.split('user_data/')[1] + """</p>
+	<p>File: """ + fileName + """</p>
 	<p>(showing first """ +str(nbrOfLines)+ """ lines)</p>
 	<p><pre>***********************************************************</pre></p>
 	"""
 	)
 
 # File
-with open(fileName) as fileName:
+with open('user_data/' + fileName) as fileName:
 	print('<pre>')
 	for line in fileName:
 		print line.strip()
