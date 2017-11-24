@@ -35,7 +35,7 @@ snp_control=${12}
 
 # Write PID to status file
 my_status_file=$project_name/$f2/status
-echo 'pid simulator '$BASHPID >> $my_status_file
+echo 'pid simulator '$$ >> $my_status_file
 
 # Get the string that contains the parameters for sim-mut.py and extract them by splitting the string by the '+' character
 sim_mut_statement=$6

@@ -55,7 +55,7 @@ my_rrl=250 														#Regulatory region length
 
 # Write PID to status file
 my_status_file=$f2/status
-echo 'pid workflow '$BASHPID >> $my_status_file
+echo 'pid workflow '$$ >> $my_status_file
 
 #Save path to bowtie2-build and bowtie2 in variable BT2
 export location="$PWD" 

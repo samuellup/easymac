@@ -15,7 +15,7 @@
 		"Library":"se",
 		"FragmentSize":"500",
 		"FragmentSd":"100",
-		"ReadDepth":"30",
+		"ReadDepth":"300",
 		"ReadSize":"100",
 		"ReadSd":"0",
 		"ErrorRate":"1",

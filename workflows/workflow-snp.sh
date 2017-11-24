@@ -83,7 +83,7 @@ f3=$project_name/3_workflow_output
 
 # Write PID to status file
 my_status_file=$f2/status
-echo 'pid workflow '$BASHPID >> $my_status_file
+echo 'pid workflow '$$ >> $my_status_file
 
 
 ##################################################################################################################################################################################
