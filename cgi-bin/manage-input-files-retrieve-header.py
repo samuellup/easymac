@@ -23,7 +23,8 @@ print(
 with open('user_data/' + fileName) as fileName:
 	print('<pre>')
 	for line in fileName:
-		print line.strip()
+		#print line.strip()
+		print cgi.escape(line.strip()).encode('ascii', 'xmlcharrefreplace')
 		c+=1
 		if c == nbrOfLines: break
 	print('</pre>')

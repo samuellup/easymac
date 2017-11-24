@@ -39,29 +39,30 @@ else:
 	for f in filepaths:
 		user_input_file = str(f[0].split('user_data/')[1])
 		file_size = convert_size(int(f[1]))
-		print '''
-				<div id="file_'''+ user_input_file +'''">
-					<div class="files-item left">
-						<h4>'''+ user_input_file +'''</h4>
+		if user_input_file[-3:] != '.gz':
+			print '''
+					<div id="file_'''+ user_input_file +'''">
+						<div class="files-item left">
+							<h4>'''+ user_input_file +'''</h4>
+						</div>
+						<div class="files-item center">
+							<h4>'''+ file_size +'''</h4>
+						</div>
+						<div class="files-item right1">
+							<a href="../cgi-bin/manage-input-files-retrieve-header.py?f='''+ user_input_file +'''" target="_blank" class="button" style="width:100px">Preview</a>
+						</div>
+						<div class="files-item right2">
+							<form>
+								<input style="margin: 3 0 7px 0" type="button" class="button" onclick="ShowRemoveFile(\'''' + user_input_file + '''\')" value="Remove from disk" />
+							</form>
+						</div>
+						<div id="rmFile_'''+ user_input_file +'''" style="display:none; clear:both;">
+							Are you sure you want to permanently remove this file from disk?
+							<form>
+								<input type="button" onclick="removeFile(\''''+ user_input_file +'''\')" value="Confirm" />
+								<input type="button" onclick="HideRemoveFile(\''''+ user_input_file +'''\')" value="Cancel" />
+							</form>
+						</div>
+						<hr class="files-separator"></hr>
 					</div>
-					<div class="files-item center">
-						<h4>'''+ file_size +'''</h4>
-					</div>
-					<div class="files-item right1">
-						<a href="../cgi-bin/manage-input-files-retrieve-header.py?f='''+ user_input_file +'''" target="_blank" class="button" style="width:100px">Preview</a>
-					</div>
-					<div class="files-item right2">
-						<form>
-							<input style="margin: 3 0 7px 0" type="button" class="button" onclick="ShowRemoveFile(\'''' + user_input_file + '''\')" value="Remove from disk" />
-						</form>
-					</div>
-					<div id="rmFile_'''+ user_input_file +'''" style="display:none; clear:both;">
-						Are you sure you want to permanently remove this file from disk?
-						<form>
-							<input type="button" onclick="removeFile(\''''+ user_input_file +'''\')" value="Confirm" />
-							<input type="button" onclick="HideRemoveFile(\''''+ user_input_file +'''\')" value="Cancel" />
-						</form>
-					</div>
-					<hr class="files-separator"></hr>
-				</div>
-		'''
+			'''
