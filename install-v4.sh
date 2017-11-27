@@ -95,9 +95,6 @@ sudo chmod -R 777 .
 export location=$PWD
 echo "@reboot   root    cd $location; ./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer 8000" >> /etc/crontab
 
-# Start server for the first use
-./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer 8000
-
 # Finally we check if Easymap functions properly by running a small project: 
 cp fonts/check.1.fa user_data/
 cp fonts/check.gff user_data/
