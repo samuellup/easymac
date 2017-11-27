@@ -45,6 +45,7 @@ function listInputFiles() {
 
 			// Parse response in JSON format
 			var inputFilesresponse = JSON.parse(this.responseText);
+			console.log(inputFilesresponse)
 
 			// Create interface to select reference sequence contigs and insertion sequence
 			var fastaBasenames = inputFilesresponse[0];

@@ -1,9 +1,44 @@
 #!src/Python-2.7.12/.localpython/bin/python2
 
-import cgi, cgitb, subprocess
+import cgi, cgitb, subprocess, os, json
 cgitb.enable()
 
-print 'Content-type:text/html\r\n\r\n'
+print 'Content-type:application/json\r\n\r\n'
+
+# Set some empty lists that will contain the names of the files
+files_fasta_basenames = list()
+files_fasta = list()
+files_fastq = list()
+files_otherFiles = list()
+all_files = list()
+
+# List all files in user_data:
+user_input_files = []
+dirname = './user_data'
+for basename in os.listdir(dirname):
+    filename = os.path.join(dirname, basename)
+    if os.path.isfile(filename):
+        user_input_files.append(str(filename.split('user_data/')[1]))
+
+
+
+for file_name in user_input_files:
+	extension = file_name.split('.')[-1]
+	name = file_name.strip('.'+extension)
+	if extension == "fa":
+		files_fasta.append(file_name)
+		basename = file_name.split('.')[0]
+		files_fasta_basenames.append(basename)
+	elif extension == 'fq':
+		files_fastq.append(file_name)
+	else:
+		files_otherFiles.append(file_name)
+
+
+
+all_files = [files_fasta_basenames, files_fasta, files_fastq, files_otherFiles]
+
+print json.dumps(all_files)
 
 
 '''
