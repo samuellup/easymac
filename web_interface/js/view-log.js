@@ -1,12 +1,11 @@
 /*
-This .js file simply calls PHP file via AJAX
-easymap.htm --> ajax.js --> fire-wf.php --> easymap.sh --> log.log --> read_log.php ... 
-
+This .js file simply calls Python CGI file via AJAX
 */
 
 window.onload = function() {
 
-	var projectName = document.getElementById("projectName").innerHTML;
+	var projectName = parent.document.URL.substring(parent.document.URL.indexOf('?')+3, parent.document.URL.length);
+	document.getElementById("projectName").innerHTML = projectName;
 
 	// Function to communicate html with php via AJAX to read a log file 
 	function readLog(projectName) {
@@ -16,15 +15,11 @@ window.onload = function() {
 				 document.getElementById("logInfo").innerHTML = this.responseText;
 			}
 		};
-		xmlhttp.open("GET", "view-log-read.php?p=" + projectName, true);
+		xmlhttp.open("GET", "../cgi-bin/view-log-read.py?p=" + projectName, true);
 		xmlhttp.send();
 	}
 
 	readLog(projectName)
-
-	// Call function readLog() every few seconds
-	//setInterval(readLog, 50000); 
-
 
 	setInterval(function() {
 		readLog(projectName);

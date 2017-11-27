@@ -1,8 +1,12 @@
 #!src/Python-2.7.12/.localpython/bin/python2
 
-import cgi, os, shutil
+import cgi, os, shutil, subprocess
 import cgitb; cgitb.enable()
-import gzip
+
+
+print 'Content-Type: text/html'
+print ''
+print '{"jsonrpc" : "2.0", "result" : null, "id" : "id"}'
 
 '''
 try: # Windows needs stdio set for binary mode.
@@ -38,7 +42,7 @@ totalChunks = str(form['chunks'].value)
 if fileItem.filename:
 	# Strip leading path from file name to avoid directory traversal attacks
 	fn = os.path.basename(fileItem.filename)
-	f = open('tmp_upload_files/' + fn, 'ab', 10000)
+	f = open('web_interface/tmp_upload_files/' + fn, 'ab', 10000)
 
 	for chunk in fbuffer(fileItem.file):
 		f.write(chunk)
@@ -53,7 +57,7 @@ else:
 # If chunk is the last to complete a file, process the server temporal file
 if currentChunk == str(int(totalChunks) - 1):
 
-	# If file is gzipped, gunzip it, remove the gziped original, and move the gunzipped to user_data dir
+	# If file is gzipped...
 	if fileName[-3:] == '.gz':
 
 		'''
@@ -63,35 +67,23 @@ if currentChunk == str(int(totalChunks) - 1):
 		server ib 'blob'. The following Try/Except structures make the script work in both situations, even
 		if I change the size o the chunks in manage-input-files.js. The chunk size is originally 50 mb.
 		'''
-
-		try:
-			inF = gzip.open('tmp_upload_files/blob', 'rb')
-		except:
-			inF = gzip.open('tmp_upload_files/' + fileName, 'rb')
-
-		outF = open('tmp_upload_files/' + fileName[:-3], 'wb')
-		outF.write(inF.read())
-		inF.close()
-		outF.close()
-
-		try:
-			os.remove('tmp_upload_files/blob')
-		except:
-			os.remove('tmp_upload_files/' + fileName)
-
-		shutil.move('tmp_upload_files/' + fileName[:-3], '../user_data/' + fileName[:-3])
 		
-	# If file is text file, simply move it to user_data dir
+		# If file was chunked, its name will be 'blob', so rename it to original name
+		if int(totalChunks) > 1:
+			os.rename('web_interface/tmp_upload_files/blob','web_interface/tmp_upload_files/' + fileName)
+
+		# Move file to user_data dir (.gz files are not displayed to user by manage-input-files-list-files.py)
+		shutil.move('web_interface/tmp_upload_files/' + fileName, 'user_data/' + fileName)
+		
+		# Once in user_data dir, gunzip the file (user can see the gunzip progress)
+		subprocess.Popen('gzip -d user_data/' + fileName, shell=True)
+	
+	# Equivalent but simpler for non .gz files...
 	else:
-		try:
-			shutil.move('tmp_upload_files/blob', '../user_data/' + fileName)
-		except:
-			shutil.move('tmp_upload_files/' + fileName, '../user_data/' + fileName)
+		if int(totalChunks) > 1:
+			os.rename('web_interface/tmp_upload_files/blob','web_interface/tmp_upload_files/' + fileName)
+		
+		shutil.move('web_interface/tmp_upload_files/' + fileName, 'user_data/' + fileName)
 
 
 #testOut.close()
-
-# Send response to client
-print 'Content-Type: text/html'
-print ''
-print '{"jsonrpc" : "2.0", "result" : null, "id" : "id"}'

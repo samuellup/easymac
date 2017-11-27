@@ -1,5 +1,11 @@
 #!src/Python-2.7.12/.localpython/bin/python2
 
+import cgi, cgitb, subprocess
+cgitb.enable()
+
+print 'Content-type:text/html\r\n\r\n'
+
+
 '''
 <?php
 

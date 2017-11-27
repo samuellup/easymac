@@ -1,4 +1,4 @@
-#!./src/Python-2.7.12/.localpython/bin/python2
+#!src/Python-2.7.12/.localpython/bin/python2
 
 import cgi, cgitb
 cgitb.enable()
@@ -23,7 +23,8 @@ print(
 with open('user_data/' + fileName) as fileName:
 	print('<pre>')
 	for line in fileName:
-		print line.strip()
+		#print line.strip()
+		print cgi.escape(line.strip()).encode('ascii', 'xmlcharrefreplace')
 		c+=1
 		if c == nbrOfLines: break
 	print('</pre>')
