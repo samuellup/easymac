@@ -458,9 +458,9 @@ window.onload = function() {
 			} else {
 				document.getElementById("simMutValMsg").style.display = "none";
 				if (cmdArgs[2] == 'ins') {
-					cmdArgs[20] = simMutInput.numberMutations + "+li";
+					cmdArgs[20] = simMutInput.numberMutations + "~li";
 				} else {
-					cmdArgs[20] = simMutInput.numberMutations + "+e";
+					cmdArgs[20] = simMutInput.numberMutations + "~e";
 				}
 			}
 		}
@@ -601,8 +601,9 @@ window.onload = function() {
 				document.getElementById("simSeqValMsg").style.display = "block";
 			} else {
 				document.getElementById("simSeqValMsg").style.display = "none";
-				cmdArgs[22] = simSeqInput.rdDepth + "+" + simSeqInput.rdSz + "," + simSeqInput.rdSd + "+" + simSeqInput.frSz + "," + simSeqInput.frSd + "+" + simSeqInput.errRt + "+" + simSeqInput.gcBias + "+" + simSeqInput.lib;
+				cmdArgs[22] = simSeqInput.rdDepth + "~" + simSeqInput.rdSz + "," + simSeqInput.rdSd + "~" + simSeqInput.frSz + "," + simSeqInput.frSd + "~" + simSeqInput.errRt + "~" + simSeqInput.gcBias + "~" + simSeqInput.lib;
 				cmdArgs[11] = simSeqInput.lib; cmdArgs[15] = simSeqInput.lib;
+				console.log(cmdArgs[22]);
 			}
 		}
 		//updateCmd();
@@ -734,8 +735,8 @@ window.onload = function() {
 				var InA = JSON.parse(document.getElementById("form1").simRecselA.value);
 				var InB = JSON.parse(document.getElementById("form1").simRecselB.value);
 				var str2 = Object.keys(InB).map(function(k){return InB[k]}).join("/");
-				var str1 = InA.contigCausalMut + ',' + InA.posCausalMut + '+r+' + InA.numRecChrs;
-				cmdArgs[21] = str2 + '+' + str1;
+				var str1 = InA.contigCausalMut + ',' + InA.posCausalMut + '~r~' + InA.numRecChrs;
+				cmdArgs[21] = str2 + '~' + str1;
 				//updateCmd();
 			}
 			if (verifySimrecselFieldA() == false) {
@@ -765,13 +766,13 @@ window.onload = function() {
 	}
 
 	function goToManageProjects() {
-		window.location.assign("manage-projects.php");
+		window.location.assign("manage-projects.htm");
 	}
 
 	// Function to trigger a new easymap execution and to redirect browser to manage-projects.htm
 	function runProject() {
 		var http = new XMLHttpRequest();
-		var url = "cgi-bin/run-new-project-create-command.py";
+		var url = "../cgi-bin/run-new-project-create-command.py";
 
 		// Create POST string to send
 		var argsStringToPost = "program=" + cmdArgs[0] +
@@ -798,7 +799,9 @@ window.onload = function() {
 							   "&sim_recsel=" + cmdArgs[21] +
 							   "&sim_seq=" + cmdArgs[22] +
 							   "&stringency=" + cmdArgs[23];
-		
+
+		//console.log('argsStringToPost: ' + argsStringToPost);
+
 		http.open("POST", url, true);
 		// Request header
 		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -811,7 +814,7 @@ window.onload = function() {
 		// Send request
 		http.send(argsStringToPost);
 		// Redirect browser to projects page
-		goToManageProjects()
+		//goToManageProjects()
 	}
 
 	/* OLD WAYS OF RUNNING NEW PROJECT
@@ -921,7 +924,7 @@ window.onload = function() {
 	document.getElementById("checkFormButton").onclick = commandFinalCheck;
 
 	// React to interactions with button to run project
-	document.getElementById("runProjectButton2").onclick = runProject;
+	document.getElementById("runProjectButton").onclick = runProject;
 }
 
 

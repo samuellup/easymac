@@ -32,10 +32,12 @@ cmdString = str(arguments['program'].value) + ' ' + \
 			str(arguments['sim_seq'].value) + ' ' + \
 			str(arguments['stringency'].value)
 
+processedCmdString = cmdString.replace('~', '+');
+print processedCmdString
+
 # For testing only
 #cmdString = './easymap.sh test ins sim nano pbinprok2.fa complete.gff TAIR10_gene_info.txt n/p n/p n/p se n/p n/p n/p se n/p n/p n/p n/p 1+li n/p 10+100,0+500,100+1+50+se n/p'
 
-subprocess.Popen(cmdString, cwd=r'../', shell=True, stdout=subprocess.PIPE)
+subprocess.Popen(processedCmdString, cwd=r'./', shell=True, stdout=subprocess.PIPE)
 
-# Sent to the client. JS function that triggers this script print it to console
-print cmdString
+

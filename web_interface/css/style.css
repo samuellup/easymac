@@ -5,6 +5,7 @@ was also created by the W3C.
 */
 
 /* Buttons */
+/*
 .button {
 	display: block;
 	float: left;
@@ -13,6 +14,25 @@ was also created by the W3C.
 	margin: 8px 5px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
+	background-color: #3366ff;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	font-family: "Poppins", sans-serif;
+	font-weight:400;
+	font-size: 15px;
+	cursor:pointer;
+}
+*/
+
+.button {
+	display: block;
+	float: left;
+	width: 200px;
+	padding: 12px 20px;
+	margin: 8px 5px;
+	border: 0px;
+	border-bottom: 5px solid #668cff;
 	background-color: #3366ff;
 	color: white;
 	text-align: center;
