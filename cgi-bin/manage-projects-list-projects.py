@@ -66,11 +66,11 @@ else:
 					Project status: ''' + status +'''<br>
 					Project size: ''' + folder_size +'''<br><br>
 					<div class="managing-buttons">
-						<a href="cgi-bin/view-log.py?p='''+ project +'''" class="button">View log file</a>		
+						<a href="view-log.htm?p='''+ project +'''" class="button">View log file</a>		
 			'''
 
 			if status == 'finished':
-				print '''<a href="cgi-bin/view-report.py?p=''' + project + '''" class="button">View report</a> '''
+				print '''<a href="view-report.htm?p=''' + project + '''" class="button">View report</a> '''
 				
 			if status == 'running':
 				print '''<form><input type="button" class="button" onclick="displayStopProject(\''''+ project +'''\')" value="Stop execution" /></form>'''
