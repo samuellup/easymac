@@ -81,26 +81,26 @@ $workflow_children = array(
 // Kill all processes that are direct children of simulator.sh and of workflow-ins/snp.sh
 // I don't kill children of process-input.sh because runtime and output are negligible
 foreach ($simulator_children as $simulator_element) {
-	//echo 'pkill -9 -P '. $pid_simulator .' '. $simulator_element .'<br>';
+	echo 'pkill -9 -P '. $pid_simulator .' '. $simulator_element .'<br>';
 	shell_exec('pkill -9 -P '. $pid_simulator .' '. $simulator_element);
 }
 
 foreach ($workflow_children as $workflow_element) {
-	//echo 'pkill -9 -P '. $pid_workflow .' '. $workflow_element .'<br>';
+	echo 'pkill -9 -P '. $pid_workflow .' '. $workflow_element .'<br>';
 	shell_exec('pkill -9 -P '. $pid_workflow .' '. $workflow_element);
 }
 
 // Kill .sh scripts using their PPID
 shell_exec('pkill -9 -P '. $pid_easymap .' simulator.sh');
-//echo 'pkill -9 -P '. $pid_easymap .' simulator.sh<br>';
+echo 'pkill -9 -P '. $pid_easymap .' simulator.sh<br>';
 shell_exec('pkill -9 -P '. $pid_easymap .' workflow-ins.sh');
-//echo 'pkill -9 -P '. $pid_easymap .' workflow-ins.sh<br>';
+echo 'pkill -9 -P '. $pid_easymap .' workflow-ins.sh<br>';
 shell_exec('pkill -9 -P '. $pid_easymap .' workflow-snp.sh');
-//echo 'pkill -9 -P '. $pid_easymap .' workflow-snp.sh<br>';
+echo 'pkill -9 -P '. $pid_easymap .' workflow-snp.sh<br>';
 
 // Kill easymap.sh
 shell_exec('pkill -9 '. $pid_easymap);
-//echo 'pkill -9 '. $pid_easymap .'<br>';
+echo 'pkill -9 '. $pid_easymap .'<br>';
 
 // Append 'status:killed' to status file
 $status = fopen($status_file, 'a');

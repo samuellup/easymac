@@ -141,6 +141,7 @@ chmod 666 $my_status_file
 echo 'status:running' >> $my_status_file
 echo 'pid easymap '$$ >> $my_status_file
 
+
 # Check that the folders /user_data and /user_data/gnm_ref exist. If they do not, 
 if ! [ -d $f0 ]; then
 	echo $(date)": Execution could not start because folder user_data could not be found. Please, create the folder and use it to place the files you want to analyze." > $my_log_file

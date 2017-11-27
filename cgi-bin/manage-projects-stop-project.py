@@ -1,6 +1,4 @@
 #!./src/Python-2.7.12/.localpython/bin/python2
-
-
 import cgi, cgitb, os, subprocess
 cgitb.enable() # For debugging only
 
@@ -8,14 +6,13 @@ cgitb.enable() # For debugging only
 print "Content-Type: text/html"
 print ""
 
-
 arguments = cgi.FieldStorage()
 projectName = str(arguments['p'].value).strip()
 
 # Default PID values
 pid_easymap = 0
 pid_simulator = 0
-pid_simulator = 0
+pid_workflow = 0
 
 # Fill PID values
 with open('./user_projects/'+projectName+'/2_logs/status') as status_file:
@@ -34,6 +31,7 @@ simulator_children = [
 	'sim-mut.py',
 	'sim-recsel.py',
 	'sim-seq.py'
+	'calculate-genome-length.py'
 	]
 
 workflow_children = [
@@ -58,44 +56,83 @@ workflow_children = [
 	'variants-operations.py',
 	'snp-to-varanalyzer.py',
 	'varanalyzer.py'
+	'ins-primers.py'
+	'primer-generation.py'
+	'extend-ins-info.py'
+	'depth_measures_generation.py'
+	'graphic-alignment.py'
+	'report.py'
+	'snp-to-varanalyzer.py'
+	'extend-snp-variants-info.py'
+	'af-comparison.py'
+	'change-snp.py'
 	]
 
-for child in simulator_children:
-	command = 'kill -9 -P ' + pid_simulator + ' ' + child
+
+# Kill all children
+if pid_simulator != 0: 
+	for child in simulator_children:
+		command = 'pkill -9 -P ' + pid_simulator + ' -f ' + child
+		subprocess.call(command, shell=True)
+
+if pid_workflow != 0: 
+	for child in workflow_children:
+		command = 'pkill -9 -P ' + pid_workflow + ' -f ' + child
+		subprocess.call(command, shell=True)
+
+
+
+# Kill .sh parents
+if pid_workflow != 0: 
+	command = 'pkill -9 -P ' + pid_workflow
 	subprocess.call(command, shell=True)
-	with open('probatina.tina.txt', 'a') as out: out.write(command)
 
-for child in workflow_children:
-	command = 'kill -9 -P ' + pid_simulator + ' ' + child
+if pid_simulator != 0: 
+	command = 'pkill -9 -P ' + pid_simulator
 	subprocess.call(command, shell=True)
 
-
-
-'''
-command = 'kill -9' + pid_simulator
-
-try:
+if pid_easymap != 0: 
+	command = 'pkill -9 -P ' + pid_easymap
 	subprocess.call(command, shell=True)
-	with open('probatina.tina.txt', 'w') as out: out.write("yassss")
 
-except:
-	with open('probatina.tina.txt', 'w') as out: out.write("FAIL")
-'''
+# Append 'status: killed' to status file
+with open('./user_projects/'+projectName+'/2_logs/status', 'a') as status_file:
+	status_file.write('status:killed')
 
-
-
-
-
+# Write to log
+log_file = './user_projects/'+projectName+'/2_logs/log.log'
+subprocess.call('echo $(date)": Project interrupted by the user." >> ' + log_file, shell=True)
 
 
-'''
-with open('probatina.tina.txt', 'w') as out:
-	out.write('hellou')
 
-command = 'mkdir trapppp'
 
-subprocess.call(command, shell=True)
-'''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -203,7 +240,8 @@ shell_exec('pkill -9 -P '. $pid_easymap .' workflow-snp.sh');
 // Kill easymap.sh
 shell_exec('pkill -9 '. $pid_easymap);
 //echo 'pkill -9 '. $pid_easymap .'<br>';
-
+'''
+'''
 // Append 'status:killed' to status file
 $status = fopen($status_file, 'a');
 fwrite($status, 'status:killed');
