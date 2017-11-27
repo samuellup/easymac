@@ -87,12 +87,16 @@ cd ../..
 # web interface (server user -- e.g. www-data) and the command line of any user
 sudo chmod -R 777 .
 
-
 # In file easymap, set absolute path to the Python binaries of the virtual environment
 # Rest of Pyhton scripts don't need this because are executed after easymap.sh activates the virtual environment
 #sed -i -e "s~ABS_PATH_ENV_PYTHON~${PWD}/src/Python-2.7.12/.localpython/bin/python2~g" easymap
 
+# We modify/create the etc/crontab file to start easymaps server on reboot
+export location=$PWD
+echo "@reboot   root    cd $location; ./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer 8000" >> /etc/crontab
 
+# Start server for the first use
+./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer 8000
 
 # Finally we check if Easymap functions properly by running a small project: 
 cp fonts/check.1.fa user_data/
