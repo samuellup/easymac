@@ -16,7 +16,7 @@ window.onload = function() {
 				 document.getElementById("logInfo").innerHTML = this.responseText;
 			}
 		};
-		xmlhttp.open("GET", "view-log-read.php?p="+projectName, true);
+		xmlhttp.open("GET", "view-log-read.php?p=" + projectName, true);
 		xmlhttp.send();
 	}
 
