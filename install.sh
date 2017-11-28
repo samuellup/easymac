@@ -19,6 +19,30 @@
 #
 ################################################################################
 
+# Deal with argument provided by user
+if ! [ $1 ]; then
+	echo 'Please provide an argument specifying the type of installation: "cli" or "server". Example: "./install.sh server"'
+	exit
+fi
+
+if ! [ $1 == server ] && ! [ $1 == cli ]; then
+	echo 'Please choose between "cli" and "server". Example: "./install.sh server"'
+	exit
+fi
+
+if [ $1 == server ]; then
+	if ! [ $2 ]; then
+		port=8100
+	elif [ "$2" -ge 8100 ] && [ "$2" -le 8200 ]; then
+		port=$2
+	else
+		echo 'Please choose a port number between 8100 and 8200. Example: "./install.sh server 8100"'
+		exit
+	fi
+fi
+
+################################################################################
+
 # Create some folders not present in GitHub repo (e.g. 'user_data' and 'user_projects')
 
 [ -d user_data ] || mkdir user_data
@@ -87,13 +111,14 @@ cd ../..
 # web interface (server user -- e.g. www-data) and the command line of any user
 sudo chmod -R 777 .
 
-# In file easymap, set absolute path to the Python binaries of the virtual environment
-# Rest of Pyhton scripts don't need this because are executed after easymap.sh activates the virtual environment
+# In file 'easymap', set absolute path to the Python binaries of the virtual environment
+# Rest of Python scripts don't need this because are executed after easymap.sh activates the virtual environment
 #sed -i -e "s~ABS_PATH_ENV_PYTHON~${PWD}/src/Python-2.7.12/.localpython/bin/python2~g" easymap
 
 # We modify/create the etc/crontab file to start easymaps server on reboot
-export location=$PWD
-echo "@reboot   root    cd $location; ./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer 8000" >> /etc/crontab
+if [ $1 == server ]; then
+	echo "@reboot   root    cd $PWD; ./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer $port" >> /etc/crontab
+fi
 
 # Finally we check if Easymap functions properly by running a small project: 
 cp fonts/check.1.fa user_data/
