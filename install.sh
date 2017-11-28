@@ -71,6 +71,7 @@ make
 cd ..
 
 ################################################################################
+
 # Create src directory 
 if [ -d src ]; then rm -rf src; fi
 mkdir src
@@ -115,12 +116,22 @@ sudo chmod -R 777 .
 # Rest of Python scripts don't need this because are executed after easymap.sh activates the virtual environment
 #sed -i -e "s~ABS_PATH_ENV_PYTHON~${PWD}/src/Python-2.7.12/.localpython/bin/python2~g" easymap
 
-# We modify/create the etc/crontab file to start easymaps server on reboot
+################################################################################
+
+# Set easymap dedicated  HTTP CGI server to run always in the background
+
 if [ $1 == server ]; then
+	
+	# Run server in the background
+	nohup ./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer $port &
+	
+	# Modify/create the etc/crontab file to always start easymap server at bootup
 	echo "@reboot   root    cd $PWD; ./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer $port" >> /etc/crontab
 fi
 
-# Finally we check if Easymap functions properly by running a small project: 
+################################################################################
+
+# Check if Easymap functions properly by running a small project: 
 cp fonts/check.1.fa user_data/
 cp fonts/check.gff user_data/
 run_result=`./easymap -n setup -w snp -sim -r check -g check.gff -ed ref_bc_parmut`
