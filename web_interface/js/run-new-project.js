@@ -141,7 +141,6 @@ function HideCheckoutBoxes() {
 // THIS SECTION DEALS WITH THE DYNAMIC FORMATTING OF THE FORM AND WITH FIELDS VALIDATION
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	
 window.onload = function() {
 	
 	// Functions that need to be declared after document has completely loaded
@@ -603,7 +602,6 @@ window.onload = function() {
 				document.getElementById("simSeqValMsg").style.display = "none";
 				cmdArgs[22] = simSeqInput.rdDepth + "~" + simSeqInput.rdSz + "," + simSeqInput.rdSd + "~" + simSeqInput.frSz + "," + simSeqInput.frSd + "~" + simSeqInput.errRt + "~" + simSeqInput.gcBias + "~" + simSeqInput.lib;
 				cmdArgs[11] = simSeqInput.lib; cmdArgs[15] = simSeqInput.lib;
-				console.log(cmdArgs[22]);
 			}
 		}
 		//updateCmd();
@@ -765,12 +763,16 @@ window.onload = function() {
 		}		
 	}
 
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
 	function goToManageProjects() {
 		window.location.assign("manage-projects.htm");
 	}
 
 	// Function to trigger a new easymap execution and to redirect browser to manage-projects.htm
-	function runProject() {
+	async function runProject() {
 		var http = new XMLHttpRequest();
 		var url = "../cgi-bin/run-new-project-create-command.py";
 
@@ -806,15 +808,17 @@ window.onload = function() {
 		// Request header
 		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-		http.onreadystatechange = function() {//Call a function when the state changes.
+		http.onreadystatechange = function() { // Call a function when the state changes
 		    if(http.readyState == 4 && http.status == 200) {
-		        console.log(http.responseText);
+		        //console.log(http.responseText);
 		    }
 		}
 		// Send request
 		http.send(argsStringToPost);
+
+		await sleep(1000);
 		// Redirect browser to projects page
-		//goToManageProjects()
+		goToManageProjects()
 	}
 
 	/* OLD WAYS OF RUNNING NEW PROJECT
