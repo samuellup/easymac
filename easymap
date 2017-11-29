@@ -47,7 +47,7 @@ args = parser.parse_args()
 generic_help_message = "Please refer to the documentation for comprehensive help."
 
 if args.usage:
-	print "Please see section 'easymap commad line arguments' in the documentation."
+	print "Please see section 'easymap command line arguments' in the documentation."
 	quit()
 
 # Process the general arguments

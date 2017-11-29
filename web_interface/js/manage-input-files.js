@@ -41,7 +41,6 @@ function removeFile(fileName) {
 	xmlhttp.send();
 }
 
-
 window.onload = function() {
 	
 	//////////////////////////////////////////////////
