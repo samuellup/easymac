@@ -48,6 +48,8 @@ fi
 [ -d user_data ] || mkdir user_data
 [ -d user_projects ] || mkdir user_projects
 
+[ -d web_interface/tmp_upload_files ] || mkdir web_interface/tmp_upload_files
+
 ################################################################################
 
 # Compile bcftools, bowtie and samtools
