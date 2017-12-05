@@ -191,8 +191,10 @@ function get_problem_va {
 	if [ $av_rd -gt 25 ]; then dp_min=15 ; fi
 	if [ $av_rd -le 25 ]; then dp_min=10 ; fi
 
+	dp_max=$(($av_rd * 3))
+
 	{
-		python2 $location/scripts_snp/variants-filter.py -a $f1/F2_raw.va -b $f1/F2_filtered.va -step 3 -fasta $f1/$my_gs -dp_min $dp_min -qual_min $problemSample_snpQualityTheshold -mut_type $mut_type  2>> $my_log_file
+		python2 $location/scripts_snp/variants-filter.py -a $f1/F2_raw.va -b $f1/F2_filtered.va -step 3 -fasta $f1/$my_gs -dp_min $dp_min -dp_max $dp_max -qual_min $problemSample_snpQualityTheshold -mut_type $mut_type  2>> $my_log_file
 
 	} || {
 		echo 'Error during execution of variants-filter.py with F2 data.' >> $my_log_file
@@ -295,8 +297,10 @@ function get_control_va {
 	if [ $av_rd -gt 25 ]; then dp_min=15 ; fi
 	if [ $av_rd -le 25 ]; then dp_min=10 ; fi
 
+	dp_max=$(($av_rd * 3))
+
 	{
-		python2 $location/scripts_snp/variants-filter.py -a $f1/control_raw.va -b $f1/control_filtered.va -step 3 -fasta $f1/$my_gs -dp_min 10 -qual_min 20  2>> $my_log_file
+		python2 $location/scripts_snp/variants-filter.py -a $f1/control_raw.va -b $f1/control_filtered.va -step 3 -fasta $f1/$my_gs -dp_min 10 -dp_max $dp_max -qual_min 20  2>> $my_log_file
 
 	} || {
 		echo $(date)': Error during execution of variants-filter.py with control data.' >> $my_log_file
