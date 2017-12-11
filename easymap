@@ -28,8 +28,8 @@ parser.add_argument('--insertion-sequence', '-i', action = 'store', default = 'n
 parser.add_argument('--gff-file','-g', action = 'store', default = 'n/p', dest = 'gff_file')
 parser.add_argument('--annotation-file', '-a', action = 'store', default = 'n/p', dest = 'ann_file')
 
-parser.add_argument('--reads-problem', '-P', action = 'store', default = 'n/p', dest = 'reads_sample')
-parser.add_argument('--reads-control','-C', action = 'store', default = 'n/p', dest = 'reads_control')
+parser.add_argument('--reads-problem', '-p', action = 'store', default = 'n/p', dest = 'reads_sample')
+parser.add_argument('--reads-control','-c', action = 'store', default = 'n/p', dest = 'reads_control')
 
 parser.add_argument('--low-stringency', '-ls', action = 'store_true', dest = 'stringency')
 
@@ -458,7 +458,7 @@ if data_source == "sim":
 if data_source == "exp":
 	if reads_sample == "n/p":
 		error = 1
-		problems.append("Argument -P/--reads-problem is required. Alternatively, you can use the -sim/--simulate-reads mode.")
+		problems.append("Argument -p/--reads-problem is required. Alternatively, you can use the -sim/--simulate-reads mode.")
 	else:
 		RS = reads_sample.split(",")
 		if len(RS) == 1:
@@ -474,28 +474,28 @@ if data_source == "exp":
 		
 		if reads_sample not in input_files:
 			error = 1
-			problems.append("Argument -P/--reads-problem: the name provided does not match any file in the directory /user_data.")	
+			problems.append("Argument -p/--reads-problem: the name provided does not match any file in the directory /user_data.")	
 
 	if lib_type_sample == "pe":
 		
 		if read_f not in input_files: 
 			error = 1
-			problems.append("Argument -P/--reads-problem: the name provided does not match any file in the directory /user_data.")
+			problems.append("Argument -p/--reads-problem: the name provided does not match any file in the directory /user_data.")
 		
 		if read_r not in input_files:
 			error = 1
-			problems.append("Argument -P/--reads-problem: the name provided does not match any file in the directory /user_data.")
+			problems.append("Argument -p/--reads-problem: the name provided does not match any file in the directory /user_data.")
 		else:
 			if read_f == read_r:
 				error = 1
-				problems.append("Argument -P/--reads-problem: the two names provided are identical.")
+				problems.append("Argument -p/--reads-problem: the two names provided are identical.")
 
 	# If snp mode, check control reads
 	if workflow == "snp":
 		
 		if reads_control == "n/p":
 			error = 1
-			problems.append("Argument -C/--reads-control is required. Alternatively, you can use the -sim/--simulate-reads mode.")
+			problems.append("Argument -c/--reads-control is required. Alternatively, you can use the -sim/--simulate-reads mode.")
 		else:
 			RC = reads_control.split(",") 
 			if len(RC) == 1:
@@ -509,23 +509,23 @@ if data_source == "exp":
 		if lib_type_control == "pe":
 			if read_f_control not in input_files:
 				error = 1
-				problems.append("Argument -C/--reads-control: the first name provided does not match any file in the directory /user_data.")
+				problems.append("Argument -c/--reads-control: the first name provided does not match any file in the directory /user_data.")
 			if read_r_control not in input_files:
 				error = 1
-				problems.append("Argument -C/--reads-control: the second name provided does not match any file in the directory /user_data.")
+				problems.append("Argument -c/--reads-control: the second name provided does not match any file in the directory /user_data.")
 			else:
 				if read_f_control == read_r_control:
 					error = 1
-					problems.append("Argument -C/--reads-control: the two names provided are identical.")
+					problems.append("Argument -c/--reads-control: the two names provided are identical.")
 		
 		if lib_type_control == "se":
 			if reads_control not in input_files:
 				error = 1
-				problems.append("Argument -C/--reads-control: the name provided does not match any file in the directory /user_data.")
+				problems.append("Argument -c/--reads-control: the name provided does not match any file in the directory /user_data.")
 
 		if reads_control == reads_sample:
 			error = 1
-			problems.append("The same name was provided to arguments -P/--reads-problem and -C/--reads-control.")
+			problems.append("The same name was provided to arguments -p/--reads-problem and -c/--reads-control.")
 
 # Deal with the --low-stringency parameter
 if workflow == "snp":
