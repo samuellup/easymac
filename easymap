@@ -456,6 +456,11 @@ if data_source == "sim":
 		
 #If the user is providing its own data (not simulating reads), reads should be provided:
 if data_source == "exp":
+	# Simulator parameters are defined as 'n/p'
+	sim_mut = 'n/p'
+	sim_recsel = 'n/p'
+	sim_seq = 'n/p'
+
 	if reads_sample == "n/p":
 		error = 1
 		problems.append("Argument -p/--reads-problem is required. Alternatively, you can use the -sim/--simulate-reads mode.")
