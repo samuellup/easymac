@@ -12,7 +12,7 @@ parser.add_argument('-gnm', action="store", dest='basename')
 parser.add_argument('-out_dir', action="store", dest='output_dir')
 args = parser.parse_args()
 
-basename = args.basename.lower()
+basename = args.basename
 output_dir = args.output_dir
 
 # Create a subdirectory to place the reads. If it already exists, remove it first
