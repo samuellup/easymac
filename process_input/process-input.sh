@@ -127,7 +127,7 @@ if [ $analysis_type == 'ins' ]; then
 	}
 	echo $(date "+%F > %T")": Insertion fasta cleanup succeeded." >> $my_log_file
 
-	fa=`python2 process_input/verify-input.py -ins $ins_seq  2>> $my_log_file`
+	fa=`python2 process_input/verify-input.py -ins $project_name/$f1/clean-ins.fa 2>> $my_log_file`
 	
 	if [ $fa == 0 ]; then
 		echo $(date "+%F > %T")": Insertion fasta input check passed." >> $my_log_file

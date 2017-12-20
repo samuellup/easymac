@@ -352,15 +352,12 @@ then
 				{
 					sam_status=`python2 $location/scripts_ins/sam-file-check.py -a $i 2>> $my_log_file`
 					
-					if [ $sam_status == 0 ]
-					then
-						{
-							:
-						}
+					if [ $sam_status == 0 ]; then : 
+				
 					else 
 						{
 							echo $(date "+%F > %T")": Sam file empty." >> $my_log_file
-							continue                                                                                                  #<<<<----------------------------------------------------
+							continue                                                                                           		#<<<<----------------------------------------------------
 						}
 					fi
 					

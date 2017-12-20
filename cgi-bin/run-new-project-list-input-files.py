@@ -34,7 +34,10 @@ for file_name in user_input_files:
 	else:
 		files_otherFiles.append(file_name)
 
-
+files_fasta_basenames = sorted(files_fasta_basenames)
+files_fasta = sorted(files_fasta)
+files_fastq = sorted(files_fastq)
+files_otherFiles = sorted(files_otherFiles)
 
 all_files = [files_fasta_basenames, files_fasta, files_fastq, files_otherFiles]
 

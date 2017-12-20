@@ -36,7 +36,7 @@ if len(filepaths)==0:
 
 else:
 	print '<hr class="files-separator"></hr>'
-	for f in filepaths:
+	for f in sorted(filepaths):
 		user_input_file = str(f[0].split('user_data/')[1])
 		file_size = convert_size(int(f[1]))
 		if user_input_file[-3:] != '.gz':

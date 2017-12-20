@@ -30,7 +30,7 @@ my_log_file=$1
 project_name=$2
 analysis_type=$3
 lib_type=$4
-ins_seq=$f0/$5
+ins_seq=$project_name/$f1/clean-ins.fa
 snp_control=${12}
 
 # Write PID to status file
