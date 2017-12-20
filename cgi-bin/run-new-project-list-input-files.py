@@ -28,7 +28,7 @@ for file_name in user_input_files:
 	if extension == "fa":
 		files_fasta.append(file_name)
 		basename = file_name.split('.')[0]
-		files_fasta_basenames.append(basename)
+		if basename not in files_fasta_basenames: files_fasta_basenames.append(basename)
 	elif extension == 'fq':
 		files_fastq.append(file_name)
 	else:
