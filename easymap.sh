@@ -144,7 +144,7 @@ echo 'pid easymap '$$ >> $my_status_file
 
 # Check that the folders /user_data and /user_data/gnm_ref exist. If they do not, 
 if ! [ -d $f0 ]; then
-	echo $(date)": Execution could not start because folder user_data could not be found. Please, create the folder and use it to place the files you want to analyze." > $my_log_file
+	echo $(date "+%F > %T")": Execution could not start because folder user_data could not be found. Please, create the folder and use it to place the files you want to analyze." > $my_log_file
 	echo 'status:error' >> $my_status_file
 	exit_code=1
 	#echo $exit_code
@@ -154,7 +154,7 @@ fi
 ############################################################
 # Start easymap
 
-echo $(date)": Execution of project {" $project_name "} started." > $my_log_file
+echo $(date "+%F > %T")": Execution of project {" $project_name "} started." > $my_log_file
 echo "" >> $my_log_file
 
 echo "Program:										" $0 >> $my_log_file
@@ -184,7 +184,7 @@ echo "Stringency:									" ${23} >> $my_log_file
 
 echo "" >> $my_log_file
 echo "######################################################" >> $my_log_file
-echo $(date)": Project data directories created." >> $my_log_file
+echo $(date "+%F > %T")": Project data directories created." >> $my_log_file
 
 
 ############################################################
@@ -220,14 +220,14 @@ fi
 ############################################################
 # Run 'process-input.sh'
 
-echo $(date)": STARTING INPUT PROCESSING..." >> $my_log_file
+echo $(date "+%F > %T")": STARTING INPUT PROCESSING..." >> $my_log_file
 
 process_input=`./process_input/process-input.sh $my_log_file $project_name $workflow $data_source $lib_type_sample $ins_seq $read_s $read_f $read_r $gff_file $ann_file $read_s_ctrl $read_f_ctrl $read_r_ctrl $ref_seq $lib_type_ctrl`
 
 if [ $process_input == 0 ]; then
-	echo $(date)": All inputs correct." >> $my_log_file
+	echo $(date "+%F > %T")": All inputs correct." >> $my_log_file
 else 
-	echo $(date)": One or more inputs incorrect (see details above in this log). Quit." >> $my_log_file
+	echo $(date "+%F > %T")": One or more inputs incorrect (see details above in this log). Quit." >> $my_log_file
 	echo 'status:error' >> $my_status_file
 	echo "Easymap analysis failed. See log file for more info"
 	exit
@@ -238,13 +238,13 @@ fi
 # Run 'simulator.sh'
 
 if [ $data_source == 'sim' ]; then
-	echo $(date)": STARTING DATA SIMULATION..." >> $my_log_file
+	echo $(date "+%F > %T")": STARTING DATA SIMULATION..." >> $my_log_file
 	simulator=`./simulator/simulator.sh $my_log_file $project_name $workflow $lib_type_sample $ins_seq $sim_mut $sim_recsel $sim_seq $cross_type $is_ref_strain $control_parental $snp_analysis_type`
 	
 	if [ $simulator == 0 ]; then
-		echo $(date)": Simulation completed." >> $my_log_file
+		echo $(date "+%F > %T")": Simulation completed." >> $my_log_file
 	else 
-		echo $(date)": Simulation failed (see details above in this log). Quit." >> $my_log_file
+		echo $(date "+%F > %T")": Simulation failed (see details above in this log). Quit." >> $my_log_file
 		echo 'status:error' >> $my_status_file
 		echo "Easymap analysis failed. See log file for more info"
 		exit
@@ -259,9 +259,9 @@ if [ $workflow == 'ins' ]; then
 	workflow_result=`./workflows/workflow-ins.sh $my_log_file $project_name $workflow $data_source $lib_type_sample $ins_seq $read_s $read_f $read_r $gff_file $ann_file`
 
 	if [ $workflow_result == 0 ]; then
-		echo $(date)": Analysis workflow finished correctly." >> $my_log_file
+		echo $(date "+%F > %T")": Analysis workflow finished correctly." >> $my_log_file
 	else 
-		echo $(date)": Analysis workflow failed (see details above in this log)." >> $my_log_file
+		echo $(date "+%F > %T")": Analysis workflow failed (see details above in this log)." >> $my_log_file
 		echo "Easymap analysis failed. See log file for more info"
 		echo 'status:error' >> $my_status_file
 		exit
@@ -272,16 +272,16 @@ if [ $workflow == 'snp' ]; then
 	workflow_result=`./workflows/workflow-snp.sh $my_log_file $project_name $workflow $data_source $lib_type_sample $ins_seq $read_s $read_f $read_r $gff_file $ann_file $read_s_ctrl $read_f_ctrl $read_r_ctrl $cross_type $is_ref_strain $control_parental $snp_analysis_type $lib_type_ctrl $stringency`
 
 	if [ $workflow_result == 0 ]; then
-		echo $(date)": Analysis workflow finished correctly." >> $my_log_file
+		echo $(date "+%F > %T")": Analysis workflow finished correctly." >> $my_log_file
 	else 
-		echo $(date)": Analysis workflow failed (see details above in this log)." >> $my_log_file
+		echo $(date "+%F > %T")": Analysis workflow failed (see details above in this log)." >> $my_log_file
 		echo "Easymap analysis failed. See log file for more info"
 		echo 'status:error' >> $my_status_file
 		exit
 	fi
 fi
 
-echo $(date)": Execution of project {" $project_name "} finished." >> $my_log_file
+echo $(date "+%F > %T")": Execution of project {" $project_name "} finished." >> $my_log_file
 echo 'status:finished' >> $my_status_file
 
 # This message must remain as is because install.sh relies on it to know whether the installation was successfull or not.
