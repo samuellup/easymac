@@ -14,7 +14,7 @@ f1 = open(input, 'r')
 output = args.out
 f3 = open(output, 'w')
 
-#Acceptable characters in a genetic sequence
+#Acceptable characters
 nts = ['A', 'C', 'T', 'G', 'N']
 
 #Fasta cleaning
@@ -23,7 +23,7 @@ for line in f1:
 
 	
 	if line.startswith('>'):
-		header = line.strip()
+		header = line.strip().lower()
 		f3.write( header + '\n')
 
 	else:
