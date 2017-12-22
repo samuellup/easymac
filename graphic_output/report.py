@@ -747,14 +747,16 @@ if mut_type == 'snp':
 	with open(input_var) as candidates:
 		for line in candidates:
 			if not line.startswith('@'):
-				n_candidates = n_candidates + 1
+				sp = line.split()
+				if sp[10].strip() != "nh":
+					n_candidates = n_candidates + 1
 
 	#then if the number of candidates is > 0, we write the candidates in a table
 
 	if n_candidates == 0:
 		output.write(
-		'		<center> <p>No candidate variants found<br></p> <center/>' + '\n'
-		'		<br><p>Click to see a list of<a href="candidate_variants_total.txt" target="_blank"> all variants</a>. </p>' + '\n'
+		'		<center> <p>No candidate variants found</p> <center/>' + '\n'
+		'		<p>Click to see a list of <a href="candidate_variants_total.txt" target="_blank">all variants</a>. </p>' + '\n'
 		
 		)
 
@@ -899,11 +901,10 @@ if mut_type == 'snp':
 		'		<br>' + '\n'
 		)
 
-		#Link to images 
-		output.write(
-		'		<br><a href="report_images.zip" target="_blank">Click to download all image files</a>' + '\n'
-		'		<hr class="easymap">' + '\n'
-		)
+	#Link to images 
+	output.write(
+	'		<br><a href="report_images.zip" target="_blank">Click to download all image files</a>' + '\n'
+	)
 
 output.write('</div>')
 output.close()
