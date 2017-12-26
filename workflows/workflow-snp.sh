@@ -869,7 +869,7 @@ then
 		cr_analysis F2_control_comparison_mapping.va 0.1
 
 	else 
-		echo $(date "+%F > %T")': No informative polymorphisms can be idendified for mutation mapping. Please review your input data.' >> $my_log_file
+		echo $(date "+%F > %T")': No informative polymorphisms can be identified for mutation mapping. Please review your input data.' >> $my_log_file
 		exit_code=1
 		echo $exit_code
 		exit
