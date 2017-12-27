@@ -30,15 +30,10 @@ with open(contig_source) as fp:
 
 
 t = open(args.out,"w")
-subprocess.call(['./samtools1/samtools', 'index'23:21: F2 data variant calling finished.
-2017-12-27 > 06:23:42: VCF grooming of F2 data finished.
-Traceback (most recent call last):
-File "/var/www/html/easymap2/scripts_snp/depth_measures_generation.py", line 38, in <module>
-t.write(depth_ou, '-b', bam, bam[:-3]+'bai'])		
+subprocess.call(['./samtools1/samtools', 'index', '-b', bam, bam[:-3]+'bai'])		
 for contig in dic:
 	if dic[contig] > 200000:
 		depth_output = subprocess.check_output(['./samtools1/samtools', 'depth', '-a', '-r',contig[1:]+":100000-200000", bam])
 		t.write(depth_output)
 	
 t.close()
-
