@@ -120,19 +120,6 @@ sudo chmod -R 777 .
 
 ################################################################################
 
-# Set easymap dedicated  HTTP CGI server to run always in the background
-
-if [ $1 == server ]; then
-	
-	# Run server in the background
-	nohup ./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer $port &
-	
-	# Modify/create the etc/crontab file to always start easymap server at bootup
-	echo "@reboot   root    cd $PWD; ./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer $port" >> /etc/crontab
-fi
-
-################################################################################
-
 # Check if Easymap functions properly by running a small project: 
 cp fonts/check.1.fa user_data/
 cp fonts/check.gff user_data/
@@ -144,6 +131,21 @@ rm  user_data/check.1.fa
 rm -rf user_projects/*
 
 if [ "$run_result" == "Easymap analysis properly completed." ]; then
+
+	# Set easymap dedicated  HTTP CGI server to run always in the background
+	if [ $1 == server ]; then
+		
+		# Run server in the background
+		nohup ./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer $port &
+		
+		# Modify/create the etc/crontab file to always start easymap server at bootup
+		echo "@reboot   root    cd $PWD; ./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer $port" >> /etc/crontab
+
+		# Save port number to /config/port for future reference for the user
+		$port > /config/port
+			
+	fi
+
 	echo " "
 	echo " "
 	echo "###################################################################################"
@@ -155,7 +157,9 @@ if [ "$run_result" == "Easymap analysis properly completed." ]; then
 	echo "###################################################################################"
 	echo " "
 	echo " "
-else 
+
+else
+
 	echo " "
 	echo " "
 	echo "###################################################################################"
@@ -167,4 +171,5 @@ else
 	echo "###################################################################################"
 	echo " "
 	echo " "
+
 fi
