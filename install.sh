@@ -142,8 +142,8 @@ if [ "$run_result" == "Easymap analysis properly completed." ]; then
 		echo "@reboot   root    cd $PWD; ./src/Python-2.7.12/.localpython/bin/python2 -m CGIHTTPServer $port" >> /etc/crontab
 
 		# Save port number to /config/port for future reference for the user
-		$port > /config/port
-			
+		echo $port > /config/port
+
 	fi
 
 	echo " "
