@@ -544,8 +544,6 @@ if mut_type == 'lin':
 						if str(i[2]).lower().strip() == contig.lower():
 							if int(i[1]) == int(position) or (int(i[1])+1) == int(position) or (int(i[1])-1) == int(position):
 								ins = str(i[0])
-								print ins
-
 
 					variants_list.append([ins, contig, position, gene, aminoacid, primer_f, primer_r, primer_5, primer_3, upstream, downstream, annotation])
 
