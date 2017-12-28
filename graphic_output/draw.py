@@ -988,7 +988,6 @@ def insertions_overview_and_histograms():
 							if img_relative_y_position < img_relative_y_position_2_r:
 								cand_pos_r = img_relative_x_position
 								img_relative_y_position_2_r = img_relative_y_position
-								if int(e) == 4: print line
 						if sp[5].strip() == 'LEFT_RD':
 							draw.line((img_relative_x_position, 753) + (img_relative_x_position, img_relative_y_position), fill=(31, 120, 180, 100), width=2)
 							if img_relative_y_position <= img_relative_y_position_2_l:
@@ -1005,8 +1004,6 @@ def insertions_overview_and_histograms():
 								cr_max = max(cr)
 								draw.line((((120 +int(sp[0].strip('@#'))/scaling_factor_x - int(region_min/scaling_factor_x)) , 448) + ((120 +int(sp[0].strip('@#'))/scaling_factor_x - int(region_min/scaling_factor_x)) , 151)), fill=(147, 147, 147, 0), width=1)
 								draw.line((((120 +int(sp[1].strip())/scaling_factor_x - int(region_min/scaling_factor_x)) , 448) + ((120 +int(sp[1].strip())/scaling_factor_x - int(region_min/scaling_factor_x)) , 151)), fill=(147, 147, 147, 0), width=1)
-
-			print e, cand_pos_r, cand_pos_l
 
 			#Candidate position:
 			if cand_pos_r != 'none' and cand_pos_l == 'none':
