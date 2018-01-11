@@ -207,10 +207,14 @@ fi
 if [ $data_source == 'exp' ]; then
 	if [ $lib_type_sample == 'se' ]; then
 		read_s=$f0/$8
-		read_s_ctrl=$f0/${12}
 	else
 		read_f=$f0/$9
 		read_r=$f0/${10}
+	fi
+
+	if [ $lib_type_ctrl == 'se' ]; then
+		read_s_ctrl=$f0/${12}
+	else
 		read_f_ctrl=$f0/${13}
 		read_r_ctrl=$f0/${14}
 	fi
@@ -250,7 +254,6 @@ if [ $data_source == 'sim' ]; then
 		exit
 	fi
 fi
-
 
 ############################################################
 # Run the chosen analysis workflow

@@ -69,7 +69,6 @@ ref_seqs_dir=$f0/gnm_ref
 ref_seqs_merged_dir=$project_name/$f1/gnm_ref_merged
 ref_seqs_merged_file=$project_name/$f1/gnm_ref_merged/genome.fa
 
-
 #######################################################################################################
 # This block of code does the initial processing of the input data provided by the user
 #                                                                                        
@@ -204,7 +203,7 @@ if [ $data_source == 'exp' ]; then
 	# If workflow includes control reads, analyze them
 
 	if [ $analysis_type == 'snp' ]; then
-		if [ $lib_type_sample == 'se' ]; then
+		if [ $lib_type_ctrl == 'se' ]; then
 			
 			fq=`python2 process_input/verify-input.py -fq $read_s_ctrl 2>> $my_log_file` 
 			
@@ -230,7 +229,7 @@ if [ $data_source == 'exp' ]; then
 			}
 		fi
 
-		if [ $lib_type_sample == 'pe' ]; then
+		if [ $lib_type_ctrl == 'pe' ]; then
 			fq_for=`python2 process_input/verify-input.py -fq $read_f_ctrl 2>> $my_log_file` 
 			
 			if [ $fq_for == 0 ]; then
