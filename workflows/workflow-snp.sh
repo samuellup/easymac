@@ -520,7 +520,7 @@ then
 	# (3) Run mapping analysis
 	my_analysis_mode=back
 
-	if [ $(wc -l < $f1/F2_control_comparison.va) -gt 0 ]
+	if [ $(wc -l < $f1/F2_control_comparison.va) -gt 1 ]
 	then 
 		{
 			python2 $location/scripts_snp/map-mutation.py -file $f1/F2_control_comparison.va -fasta $f1/$my_gs -mode $my_analysis_mode -window_size 600000 -window_space 500000 -output $f1/map_info.txt -control_modality $my_mutbackgroud -interval_width 4000000 -snp_analysis_type $snp_analysis_type  2>> $my_log_file
@@ -590,7 +590,7 @@ then
 	# (4) Run mapping analysis
 	my_analysis_mode=back
 
-	if [ $(wc -l < $f1/F2_control_comparison.va) -gt 0 ]
+	if [ $(wc -l < $f1/F2_control_comparison.va) -gt 1 ]
 	then 
 		{
 			python2 $location/scripts_snp/map-mutation.py -file $f1/F2_control_comparison.va -fasta $f1/$my_gs -mode $my_analysis_mode -window_size 350000 -window_space 250000 -output $f1/map_info.txt -control_modality $my_mutbackgroud -interval_width 4000000 -snp_analysis_type par  2>> $my_log_file
@@ -673,7 +673,7 @@ then
 	# (3) Run mapping analysis
 	my_analysis_mode=out
 
-	if [ $(wc -l < $f1/F2_control_comparison.va) -gt 0 ]
+	if [ $(wc -l < $f1/F2_control_comparison.va) -gt 1 ]
 	then 
 		{
 			python2 $location/scripts_snp/map-mutation.py -file $f1/F2_control_comparison.va -fasta $f1/$my_gs -mode $my_analysis_mode -window_size 250000 -window_space 25000 -output $f1/map_info.txt -control_modality $my_mutbackgroud -interval_width 4000000 -snp_analysis_type $snp_analysis_type  2>> $my_log_file
@@ -763,7 +763,7 @@ then
 	# (6) Run mapping analysis
 	my_analysis_mode=out
 
-	if [ $(wc -l < $f1/F2_control_comparison_mapping.va) -gt 0 ]
+	if [ $(wc -l < $f1/F2_control_comparison_mapping.va) -gt 1 ]
 	then 
 		{
 			python2 $location/scripts_snp/map-mutation.py -file $f1/F2_control_comparison_mapping.va -fasta $f1/$my_gs -mode $my_analysis_mode -window_size 250000 -window_space 25000 -output $f1/map_info.txt -control_modality noref -interval_width 4000000 -snp_analysis_type $snp_analysis_type  2>> $my_log_file
@@ -836,7 +836,7 @@ then
 	my_analysis_mode=out
 
 
-	if [ $(wc -l < $f1/F2_control_comparison_mapping.va) -gt 0 ]
+	if [ $(wc -l < $f1/F2_control_comparison_mapping.va) -gt 1 ]
 	then 
 		{
 			python2 $location/scripts_snp/map-mutation.py -file $f1/F2_control_comparison_mapping.va -fasta $f1/$my_gs -mode $my_analysis_mode -window_size 250000 -window_space 25000 -output $f1/map_info.txt -control_modality $my_mutbackgroud -interval_width 4000000 -snp_analysis_type $snp_analysis_type  2>> $my_log_file
@@ -880,7 +880,7 @@ fi
 #Intermediate files cleanup
 rm -f $f1/*.bam
 rm -f $f1/*.bai
-if [ -d "$f1/sim_data" ]; then rm -Rf $f1/sim_data/; fi
+#if [ -d "$f1/sim_data" ]; then rm -Rf $f1/sim_data/; fi
 
 
 echo $exit_code
