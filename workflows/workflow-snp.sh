@@ -192,6 +192,8 @@ function get_problem_va {
 	if [ $av_rd -le 25 ]; then dp_min=10 ; fi
 
 	dp_max=$(($av_rd * 3))
+	if [ $dp_max -le 40 ]; then dp_max=100 ; fi
+
 
 	{
 		python2 $location/scripts_snp/variants-filter.py -a $f1/F2_raw.va -b $f1/F2_filtered.va -step 3 -fasta $f1/$my_gs -dp_min $dp_min -dp_max $dp_max -qual_min $problemSample_snpQualityTheshold -mut_type $mut_type  2>> $my_log_file
@@ -298,6 +300,7 @@ function get_control_va {
 	if [ $av_rd -le 25 ]; then dp_min=10 ; fi
 
 	dp_max=$(($av_rd * 3))
+	if [ $dp_max -le 40 ]; then dp_max=100 ; fi
 
 	{
 		python2 $location/scripts_snp/variants-filter.py -a $f1/control_raw.va -b $f1/control_filtered.va -step 3 -fasta $f1/$my_gs -dp_min 10 -dp_max $dp_max -qual_min 20  2>> $my_log_file
