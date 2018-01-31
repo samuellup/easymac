@@ -1214,13 +1214,13 @@ def insertions_overview_and_histograms():
 
 						#draw
 						if sp[5].strip() == 'RIGHT_RD':
-							draw.line((img_relative_x_position, 449) + (img_relative_x_position, img_relative_y_position), fill=(64, 159, 65, 100), width=2)
+							draw.line((img_relative_x_position, 449) + (img_relative_x_position, img_relative_y_position), fill=(64, 159, 65, 100), width=3)
 							if img_relative_y_position < img_relative_y_position_2_r:
 								cand_pos_r = img_relative_x_position
 								img_relative_y_position_2_r = img_relative_y_position
 
 						if sp[5].strip() == 'LEFT_RD':
-							draw.line((img_relative_x_position, 449) + (img_relative_x_position, img_relative_y_position), fill=(31, 120, 180, 100), width=2)
+							draw.line((img_relative_x_position, 449) + (img_relative_x_position, img_relative_y_position), fill=(31, 120, 180, 100), width=3)
 							if img_relative_y_position <= img_relative_y_position_2_l:
 								cand_pos_l = img_relative_x_position
 								img_relative_y_position_2_l = img_relative_y_position
