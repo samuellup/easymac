@@ -110,22 +110,6 @@ then
 	echo $(date "+%F > %T")': bowtie2 paired finished.' >> $my_log_file
 fi
 
-if [ $my_mode == 'se' ] 
-then
-	{
-		$location/bowtie2/bowtie2 --very-sensitive --mp 3,2 -x $f1/$my_ix -U $my_rd -S $f1/alignment1.sam 2> $f2/bowtie2_ins_std2.txt
-	
-	} || {
-		echo $(date "+%F > %T")': bowtie2 on the insertion sequence returned an error. See log files.' >> $my_log_file
-		exit_code=1
-		echo $exit_code
-		exit
-	}
-
-	echo $(date "+%F > %T")': bowtie2 unpaired finished.' >> $my_log_file
-fi
-
-
 #_______________________________________________________________________Paired-end reads processing___________________________________________________________________________________
 
 if [ $my_mode == 'pe' ]
@@ -545,5 +529,10 @@ fi
 	exit
 }
 echo $(date "+%F > %T")': Report file created.' >> $my_log_file
+
+#Cleanup
+rm -rf $f1/sim_data
+rm -f $f1/*.fq
+rm -f $f1/*.bt2
 
 echo $exit_code
