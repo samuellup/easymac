@@ -856,14 +856,22 @@ def insertions_overview_and_histograms():
 	tag = 'Position (Mb)'
 	num = 0
 	draw.text((480, contigs_image_length + 88), str(tag), font=fnt3, fill=256)
-	while int(m) in range(100, 951):
-		draw.line(( int(m), contigs_image_length + 48) + (int(m), contigs_image_length + 52), fill=256, width=1)
 
-		w, h = draw.textsize(str(num))
+	if mb_max < 40:
+		while int(m) in range(100, 951):
+			draw.line(( int(m), contigs_image_length + 48) + (int(m), contigs_image_length + 52), fill=256, width=1)
+			w, h = draw.textsize(str(num))
+			draw.text((int(m) - w/2 -2, contigs_image_length + 57), str(num), font=fnt3, fill=256)
+			num = num + 1
+			m = m + mb
 
-		draw.text((int(m) - w/2 -2, contigs_image_length + 57), str(num), font=fnt3, fill=256)
-		num = num + 1
-		m = m + mb
+	if mb_max >= 40:
+		while int(m) in range(100, 951):
+			draw.line(( int(m), contigs_image_length + 48) + (int(m), contigs_image_length + 52), fill=256, width=1)
+			w, h = draw.textsize(str(num))
+			draw.text((int(m) - w/2 -2, contigs_image_length + 57), str(num), font=fnt3, fill=256)
+			num = num + 5
+			m = m + mb*5
 
 	im.save(project + "/3_workflow_output/insertions_overview.png")
 
