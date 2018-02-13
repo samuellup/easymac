@@ -883,7 +883,7 @@ fi
 #Intermediate files cleanup
 rm -f $f1/*.bam
 rm -f $f1/*.bai
-#if [ -d "$f1/sim_data" ]; then rm -Rf $f1/sim_data/; fi
+if [ -d "$f1/sim_data" ]; then rm -Rf $f1/sim_data/; fi
 
 
 echo $exit_code

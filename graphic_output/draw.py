@@ -104,7 +104,7 @@ def fa_vs_pos():
 
 	#FA vs POS graphs 
 	for i in fastalist:
-		if int(i[1]) > 100: 
+		if int(i[1]) > 1000000: 
 			wide=int(880*float(i[1])/max_contig_len) + 120					#<-------------------------------------------------------------------------------- SET IMAGE SIZE
 			height=500
 			im = Image.new("RGB", (1000, int(height)), (255,255,255))		# Esta puesto para da imagenes de tamano fijo (manteniendo la escala). Para tener ancho variable: im = Image.new("RGB", (wide, int(height)), (255,255,255))
@@ -346,7 +346,7 @@ def fa_vs_pos():
 			#Axis rulers_____________________
 			#X Axis
 
-			if int(i[1]) > 1000000:
+			if max_contig_len > 1000000  and max_contig_len <= 40000000 :
 				mbs = int(0/scaling_factor_x) + 68
 				x_tag = 0
 				while mbs in range(68, wide-50):
@@ -359,7 +359,20 @@ def fa_vs_pos():
 					mbs = mbs + 1000000/scaling_factor_x +1
 					x_tag = x_tag + 1
 
-			elif int(i[1]) <= 1000000:
+			if max_contig_len > 40000000 :
+				mbs = int(0/scaling_factor_x) + 68
+				x_tag = 0
+				while mbs in range(68, wide-50):
+					draw.line((mbs, int(81/100.0*height) ) + (mbs, int(80/100.0*height)), fill=(0, 0, 0, 0), width=1)	
+					if len(str(x_tag)) == 1:
+						draw.text(((mbs - 4), (int(81.8/100.0*height))), (str(x_tag).strip()), font=fnt2, fill=(0,0,0,255))
+					elif len(str(x_tag)) == 2: 
+						draw.text(((mbs - 8), (int(81.8/100.0*height))), (str(x_tag).strip()), font=fnt2, fill=(0,0,0,255))
+					
+					mbs = mbs + 5000000/scaling_factor_x +1
+					x_tag = x_tag + 5
+
+			elif max_contig_len <= 1000000:
 				mbs = int(0/scaling_factor_x) + 68
 				x_tag = 0
 				while mbs in range(68, wide-50):
@@ -367,6 +380,7 @@ def fa_vs_pos():
 					draw.text(((mbs - 4*len(str(x_tag))), (int(81.8/100.0*height))), (str(x_tag).strip()), font=fnt2, fill=(0,0,0,255))
 					mbs = mbs + 100000/scaling_factor_x +1
 					x_tag = x_tag + 100000
+
 
 			#Y axis
 			fa_img_0 = int(80/100.0*height) - int(0/scaling_factor_y) - 1		
