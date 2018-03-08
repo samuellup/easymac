@@ -355,7 +355,7 @@ then
 			    #SAM to BAM
 			    substring=${i%.*}
 			    #Check whether the number of lines that are not starting with @ to be > 0, if it is, do the rest: we might have a program to do this
-				$location/samtools1/samtools sort $i  > $substring.bam 
+				$location/samtools1/samtools sort $i  > $substring.bam 2> $f2/samtools-sort.log
 				
 				$location/samtools1/samtools mpileup -uf $f1/$my_is $substring.bam 2> $f2/samtools-consensus.log | $location/bcftools-1.3.1/bcftools call -c  2> $f2/samtools-consensus.log | $location/bcftools-1.3.1/misc/vcfutils.pl vcf2fq > $f1/cns.fq 2> $f2/samtools-consensus.log
 				
@@ -474,7 +474,7 @@ fi
 
 # (3) SAM to BAM 
 {
-	$location/samtools1/samtools sort $f1/alignment5.sam  > $f1/alignment5.bam 
+	$location/samtools1/samtools sort $f1/alignment5.sam  > $f1/alignment5.bam 2> $f2/samtools-sort.log
 	rm -f $f1/alignment5.sam
 
 } || {
@@ -531,7 +531,7 @@ fi
 echo $(date "+%F > %T")': Report file created.' >> $my_log_file
 
 #Cleanup
-rm -rf $f1/sim_data
+#rm -rf $f1/sim_data
 rm -f $f1/*.fq
 rm -f $f1/*.bt2
 

@@ -912,7 +912,7 @@ def insertions_overview_and_histograms():
 				if not line.startswith('@'):
 					sp = line.split('\t')
 					#Max and min for genome region in graphic
-					if sp[2] == e and sp[0] == 'PAIRED' : 
+					if sp[2] == e:		# and sp[0] == 'PAIRED' : 
 						if int(sp[3]) > region_max:
 							region_max = int(sp[3])
 						else:
@@ -1015,6 +1015,7 @@ def insertions_overview_and_histograms():
 							if img_relative_y_position <= img_relative_y_position_2_l:
 								cand_pos_l = img_relative_x_position
 								img_relative_y_position_2_l = img_relative_y_position
+			'''
 			#Candidate regions
 			for i, line in enumerate(lines):
 				if line.startswith('@#'):
@@ -1026,6 +1027,7 @@ def insertions_overview_and_histograms():
 								cr_max = max(cr)
 								draw.line((((120 +int(sp[0].strip('@#'))/scaling_factor_x - int(region_min/scaling_factor_x)) , 448) + ((120 +int(sp[0].strip('@#'))/scaling_factor_x - int(region_min/scaling_factor_x)) , 151)), fill=(147, 147, 147, 0), width=1)
 								draw.line((((120 +int(sp[1].strip())/scaling_factor_x - int(region_min/scaling_factor_x)) , 448) + ((120 +int(sp[1].strip())/scaling_factor_x - int(region_min/scaling_factor_x)) , 151)), fill=(147, 147, 147, 0), width=1)
+			'''
 
 			#Candidate position:
 			if cand_pos_r != 'none' and cand_pos_l == 'none':

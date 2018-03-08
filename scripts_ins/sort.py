@@ -86,28 +86,28 @@ if args.mode == 'pe':
 	for i, line in enumerate(lines):
 		if not line.startswith('@'):
 			sp = line.split(',')
-			if str(sp[0]).strip() == 'PAIRED' and  str(sp[4]).strip() == 'TOTAL':
-				p = int(sp[2])
-				contig = sp[1].strip('\t')
-				try:
-					d = abs(int(p2) - int(p))
-					if d > 1000 or contig != contig2:
-						insertion_id = insertion_id + 1
-						f2.write(sp[0] + '\t' + sp[1] + '\t' + str(insertion_id) + '\t' + sp[2] + '\t' + sp[3] + '\t' + sp[4])
-						p2 = p
-						contig2 = contig
+			#if str(sp[0]).strip() == 'PAIRED' and  str(sp[4]).strip() == 'TOTAL':
+			p = int(sp[2])
+			contig = sp[1].strip('\t')
+			try:
+				d = abs(int(p2) - int(p))
+				if d > 1000 or contig != contig2:
+					insertion_id = insertion_id + 1
+					f2.write(sp[0] + '\t' + sp[1] + '\t' + str(insertion_id) + '\t' + sp[2] + '\t' + sp[3] + '\t' + sp[4])
+					p2 = p
+					contig2 = contig
 
-					else:
-						f2.write(sp[0] + '\t' + sp[1] + '\t' + str(insertion_id) + '\t' + sp[2] + '\t' + sp[3] + '\t' + sp[4] )
-						p2 = p
-						contig2 = contig
-				except:
+				else:
 					f2.write(sp[0] + '\t' + sp[1] + '\t' + str(insertion_id) + '\t' + sp[2] + '\t' + sp[3] + '\t' + sp[4] )
 					p2 = p
 					contig2 = contig
-			
-			else:
+			except:
 				f2.write(sp[0] + '\t' + sp[1] + '\t' + str(insertion_id) + '\t' + sp[2] + '\t' + sp[3] + '\t' + sp[4] )
+				p2 = p
+				contig2 = contig
+		
+			#else:
+			#	f2.write(sp[0] + '\t' + sp[1] + '\t' + str(insertion_id) + '\t' + sp[2] + '\t' + sp[3] + '\t' + sp[4] )
 
 elif args.mode == 'se':
 	for i, line in enumerate(lines):
@@ -115,10 +115,8 @@ elif args.mode == 'se':
 			sp = line.split(',')
 			#if str(sp[0]).strip() == 'LOCAL_RD' and  str(sp[4]).strip() == 'TOTAL_RD':
 			if 'LOCAL' in str(sp[0]).strip(): # and  'TOTAL' in str(sp[4]).strip():
-
 				p = int(sp[2])
 				contig = sp[1].strip('\t')
-
 				try:
 					d = abs(int(p2) - int(p))
 					if d > 500 or contig != contig2:
@@ -170,9 +168,9 @@ if args.mode == 'pe':
 		for l, line in enumerate(lines):
 			if not line.startswith('@'):
 				sp = line.split()
-				if int(sp[2]) == insertion and sp[0].strip() == "PAIRED":	
+				if int(sp[2]) == insertion: 														# and sp[0].strip() == "PAIRED":	
 					#1st criterion: insertion must have forward and reverse supporting reads
-					read_direction = sp[5]
+					read_direction = sp[5].strip("_RD")
 					if read_direction not in directions and "TOTAL" not in read_direction:
 						directions.append(read_direction)
 
@@ -191,7 +189,15 @@ if args.mode == 'pe':
 				if int(sp[2]) == insertion and "LOCAL" in str(sp[0].strip()):	
 					local = "true"
 
-		if len(directions) >= 2 or max_RD >= 3 or span > 300:
+		threshold = 0
+		if len(directions) >= 2:
+			threshold = threshold + 1
+		if max_RD >= 3:
+			threshold = threshold + 1
+		if span > 250:
+			threshold = threshold + 1
+
+		if threshold >= 2:											#threshold >= 2 for default filtering 
 			if local == "true":
 				insertions_final.append(insertion)
 
@@ -208,7 +214,7 @@ elif args.mode == 'se':
 				sp = line.split()
 				if int(sp[2]) == insertion and sp[0].strip() == "LOCAL_RD":
 					#1st criterion: insertion must have forward and reverse supporting reads
-					read_direction = sp[5]
+					read_direction = sp[5].strip("_RD")
 					if read_direction not in directions and "TOTAL" not in read_direction:
 						directions.append(read_direction)
 
@@ -223,7 +229,15 @@ elif args.mode == 'se':
 						min_pos = int(sp[3])
 					span = max_pos - min_pos
 
-		if len(directions) >= 2 or max_RD >= 3 or span > 300:
+		threshold = 0
+		if len(directions) >= 2:
+			threshold = threshold + 1
+		if max_RD >= 3:
+			threshold = threshold + 1
+		if span > 250:
+			threshold = threshold + 1
+
+		if threshold >= 2:												#threshold >= 2 for default filtering 
 			insertions_final.append(insertion)
 
 f1.close()
