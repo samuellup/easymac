@@ -234,7 +234,7 @@ elif args.mode == 'se':
 			threshold = threshold + 1
 		if max_RD >= 3:
 			threshold = threshold + 1
-		if span > 250:
+		if span > 200:
 			threshold = threshold + 1
 
 		if threshold >= 2:												#threshold >= 2 for default filtering 
