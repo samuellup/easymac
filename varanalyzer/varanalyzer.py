@@ -101,7 +101,7 @@ def dna_to_prot(dna_seq):
 		codon = dna_seq[start:start+3]
 		try:
 			if genetic_code[codon] == "STOP":
-				prot_seq.append('STOP')
+				prot_seq.append('*')
 				break
 			prot_seq.append(genetic_code[codon])
 		except KeyError: # To prevent non ATGC nts cause the script to throw an error and stop
@@ -358,6 +358,7 @@ for variant_info in variants_info:
 					for aa_wt, aa_mt in zip(prot_wt, prot_mt):
 						if aa_wt != aa_mt:
 							aa_change = True
+							if aa_mt == "*": aa_mt = "STOP"
 							result_aa_wt, result_aa_mt = aa_wt, aa_mt
 							result_aa_position = aa_position								
 						aa_position += 1
