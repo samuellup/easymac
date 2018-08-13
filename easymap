@@ -19,7 +19,7 @@ import argparse, os, fnmatch, subprocess, json
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--usage', '-u', action = 'store_true', dest = 'usage')
-parser.add_argument('--project-name', '-n', action = 'store', default = '', dest = 'project_name')
+parser.add_argument('--project-name', '-n', action = 'store', default = 'n/p', dest = 'project_name')
 parser.add_argument('--workflow', '-w', action = 'store', default = 'n/p', dest = 'workflow', choices = set(('snp','ins')))
 parser.add_argument('--simulate-data', '-sim', action = 'store_true', dest = 'simulate')
 
