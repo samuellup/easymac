@@ -153,7 +153,7 @@ function get_problem_va {
 	#Variant calling
 	{
 
-		$location/samtools1/samtools mpileup  -B -t DP,ADF,ADR $problemSample_mpileup_C -uf $f1/$my_gs $f1/alignment1.bam 2> $f2/mpileup_problem-sample_std.txt | $location/bcftools-1.3.1/bcftools call -mv -Ov > $f1/raw_variants.vcf 2> $f2/call_problem-sample_std.txt
+		$location/samtools1/samtools mpileup  -t DP,ADF,ADR $problemSample_mpileup_C -uf $f1/$my_gs $f1/alignment1.bam 2> $f2/mpileup_problem-sample_std.txt | $location/bcftools-1.3.1/bcftools call -mv -Ov > $f1/raw_variants.vcf 2> $f2/call_problem-sample_std.txt
 		# -B: Disables probabilistic realignment for the computation of base alignment quality (BAQ). Applying this argument reduces the number of false negatives during the variant calling
 		# -t DP,ADF,ADR: output VCF file contains the specified optional columns: read depth (DP), allelic depths on the forward strand (ADF), allelic depths on the reverse strand (ADR)
 		# -uf: uncompressed vcf output / fasta imput genome file
@@ -269,7 +269,7 @@ function get_control_va {
 	#Variant calling
 	{
 
-		$location/samtools1/samtools mpileup  -B -t DP,ADF,ADR  -uf $f1/$my_gs $f1/alignment1P.bam 2> $f2/mpileup_control-sample_std.txt | $location/bcftools-1.3.1/bcftools call -mv -Ov > $f1/raw_p_variants.vcf 2> $f2/call_control-sample_std.txt
+		$location/samtools1/samtools mpileup  -t DP,ADF,ADR  -uf $f1/$my_gs $f1/alignment1P.bam 2> $f2/mpileup_control-sample_std.txt | $location/bcftools-1.3.1/bcftools call -mv -Ov > $f1/raw_p_variants.vcf 2> $f2/call_control-sample_std.txt
 
 	} || {
 		echo $(date "+%F > %T")': Error during variant-calling of control data' >> $my_log_file
