@@ -104,7 +104,7 @@ def fa_vs_pos():
 
 	#FA vs POS graphs 
 	for i in fastalist:
-		if int(i[1]) > 1000000: 
+		if int(i[1]) > 2000000: 
 			wide=int(880*float(i[1])/max_contig_len) + 120					#<-------------------------------------------------------------------------------- SET IMAGE SIZE
 			height=500
 			im = Image.new("RGB", (1000, int(height)), (255,255,255))		# Esta puesto para da imagenes de tamano fijo (manteniendo la escala). Para tener ancho variable: im = Image.new("RGB", (wide, int(height)), (255,255,255))

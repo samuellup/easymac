@@ -120,7 +120,7 @@ if step == '3':
 
 	large_contigs = list()
 	for contig in fastalist:
-		if int(contig[1]) > 1000000:
+		if int(contig[1]) > 2000000:
 			large_contigs.append(contig[0]) 
 
 	# Filter
