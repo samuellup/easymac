@@ -370,35 +370,36 @@ if control == "f2wt":
 #Call of the function chromosome by chromosome, the final result comes from the chromosome with the higher parameters
 z = 0
 
-for chromosome in ch:  
-	inpu = args.input	
-	genome = getinfo(chromosome,inpu)
+for chromosome in ch:
+	if int(ch[chromosome]) > 2000000:								#	<---- SDL 28-11-18, DEBUGGING
+		inpu = args.input	
+		genome = getinfo(chromosome,inpu)
 
-	windows = chromosomal_position(size, space, genome, chromosome, ch[chromosome], mode, modality, control)
+		windows = chromosomal_position(size, space, genome, chromosome, ch[chromosome], mode, modality, control)
 
-	if mode == "out" and control == "par" :
-		if modality == "noref":
-			mini_average = 0.4
-			maxi_average = 1
-		elif modality == "ref":
-			mini_average= 0
-			maxi_average= 0.6    
-		windows = threshold_step(windows, mini_average, maxi_average)
+		if mode == "out" and control == "par" :
+			if modality == "noref":
+				mini_average = 0.4
+				maxi_average = 1
+			elif modality == "ref":
+				mini_average= 0
+				maxi_average= 0.6    
+			windows = threshold_step(windows, mini_average, maxi_average)
 
-	x_value = union_points(windows)
+		x_value = union_points(windows)
 
-	if z == 0:
-		result_data = data_analysis(windows, x_value, chromosome, "n/p", "n/p", "n/p", "n/p", size, mode, control, mut1)
-		best = result_data[1]
-		maximum_position = result_data[0]
-		best_chromosome = result_data[2]
-		best_dictionary = result_data[3]
-	else:
-		result_data = data_analysis(windows, x_value, chromosome,maximum_position,best, best_chromosome, best_dictionary, size, mode, control,mut1)
-		best = result_data[1]
-		maximum_position = result_data[0]
-		best_chromosome = result_data[2]
-		best_dictionary = result_data[3]
-	z += 1
+		if z == 0:
+			result_data = data_analysis(windows, x_value, chromosome, "n/p", "n/p", "n/p", "n/p", size, mode, control, mut1)
+			best = result_data[1]
+			maximum_position = result_data[0]
+			best_chromosome = result_data[2]
+			best_dictionary = result_data[3]
+		else:
+			result_data = data_analysis(windows, x_value, chromosome,maximum_position,best, best_chromosome, best_dictionary, size, mode, control,mut1)
+			best = result_data[1]
+			maximum_position = result_data[0]
+			best_chromosome = result_data[2]
+			best_dictionary = result_data[3]
+		z += 1
 
 final_processing(result_data, interval_width)
