@@ -121,14 +121,14 @@ if step == '3':
 	large_contigs = list()
 	for contig in fastalist:
 		if int(contig[1]) > 2000000:
-			large_contigs.append(contig[0]) 
+			large_contigs.append(contig[0].lower()) 
 
 	# Filter
 	for i, line in enumerate(lines):
 		if not line.startswith('#'):
 			sp = line.split('\t')
 			if len(sp[2].strip()) == 1 and len(sp[3].strip()) == 1:
-				if str(sp[0]).strip() in large_contigs:
+				if str(sp[0]).strip().lower() in large_contigs:
 					if args.mut_type.strip() == 'EMS' and ((str(sp[0].strip())  in chromosome) or (chromosome[0] == '*')): 
 						limits()
 						ref_b = sp[2]
