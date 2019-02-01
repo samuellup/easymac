@@ -587,7 +587,12 @@ if mut_type == 'lin':
 
 				for f in sorted(files):
 					if '_lin_' + ins[0] + '_gene' in str(f):
-						gene = str(f).split('_')[5].split('.')[0]+'.'+str(f).split('_')[5].split('.')[1]
+						fname = str(f).split('_')[5]
+						spf=fname.split('.')
+						gene1=""
+						for b in spf[:-1] : gene1=gene1+b+"."
+						gene=gene1[:-1]
+						#DEPRECATED: gene = str(f).split('_')[5].split('.')[0]+'.'+str(f).split('_')[5].split('.')[1]
 						for i in variants_list:
 							if gene in str(i[3]):
 								output.write(

@@ -474,13 +474,15 @@ if mode != 1:
 				if line.startswith("@user_projects"):
 					gene = line.split("/")[-1]
 					split = gene.split("_")
-					h = split[0]+"_"+split[1]
+					cnt=""
+					for b in split[:-2]: cnt = cnt + b + "_"
+					h = cnt[:-1]+"_"+split[-2]
 					m = 0
 					#Depending on whether the reads are in the 3' or 5' extreme they will go to one dic or another.
-					if split[2].strip()=="3":
+					if split[-1].strip()=="3":
 						n = 1
 						dic_fas_3[h]=""
-					if split[2].strip()=="5":
+					if split[-1].strip()=="5":
 						n= 2
 						dic_fas_5[h]=""
 					continue 

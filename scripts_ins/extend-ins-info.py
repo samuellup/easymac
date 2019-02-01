@@ -69,9 +69,11 @@ for line in fi:
 		sp = line.split('/')
 		data = sp[-1]
 		sp2 = data.split('_')
-		chromosome = sp2[0].lower()
-		position = sp2[1]
-		end = sp2[2].strip('\n')
+		chrm=""
+		for b in sp2[:-2]: chrm=chrm+b+"_"
+		chromosome = chrm[:-1].lower()
+		position = sp2[-2]
+		end = sp2[-1].strip('\n')
 		sequence = ''
 
 	if "c" in str(line).lower() or "a" in str(line).lower() or "t" in str(line).lower() or "g" in str(line).lower() and switch == 'seq':

@@ -1388,7 +1388,7 @@ def gene_plot():
 		for g, line in enumerate(lines_gff):
 			if not line.startswith('#'):
 				sp = line.split('\t')
-				if (p[3] + ';') in (sp[8].strip() + ';'):
+				if (p[3] + ';')  in (sp[8].strip() + ';'):
 					feature = [sp[2], sp[3], sp[4]]
 					positions.append(int(sp[3]))
 					positions.append(int(sp[4]))
