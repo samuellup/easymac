@@ -191,13 +191,13 @@ if args.mode == 'pe':
 
 		threshold = 0
 		if len(directions) >= 2:
-			threshold = threshold + 2
+			threshold = threshold + 1
 		if max_RD >= 3:
 			threshold = threshold + 1
 		if span > 250:
 			threshold = threshold + 1
 
-		if threshold >= 3:											#threshold >= 2 for default filtering 
+		if threshold >= 2:											#threshold >= 2 for default filtering 
 			if local == "true":
 				insertions_final.append(insertion)
 
