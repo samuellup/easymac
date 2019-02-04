@@ -492,14 +492,14 @@ else:
 		
 		if hit_gene != '':
 			# Default value
-			ann_result = 'Gene not in file provided'
+			ann_result = 'Gene not found in the annotation file'
 			
 			for ann_gene in ann_array:
 				ann_fields = ann_gene.split('\t')
 				if hit_gene == ann_fields[0].strip('\n'):
 					ann_info_fields = ann_fields[1:]
 					ann_info_string = '; '.join(ann_info_fields)
-					if ann_info_string == '': ann_info_string = 'No info in file provided'
+					if ann_info_string == '': ann_info_string = 'Information not found in the annotation file'
 					ann_result = ann_info_string.strip('\n')
 					ann_result = ann_result.replace('\t', "; ")
 
