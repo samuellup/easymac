@@ -735,24 +735,6 @@ def insertions_overview_and_histograms():
 	#dict_contigs = dict()
 	lengthlist = list()
 
-	#read fasta file to determine number of contigs
-	for i, line in enumerate(flines):
-		if line.startswith('>'): 		#fasta sequences start with '>'
-			sp = line.split(' ')  		#because some names have whitespaces and extra info that is not written to sam file
-			cont = sp[0].strip()  		#strip() is to remove the '\r\n' hidden chars
-			cont = cont[1:]       		#to remove the first char of string (>)
-			if cont not in contigs:
-				contigs.append(cont)
-				innerlist = list()
-				innerlist.append(cont)
-				superlist.append(innerlist)
-
-	#Calculate the width of the image acording to the number of contigs
-	num_contigs = 0
-	for c in superlist: 
-		num_contigs+=1
-	contigs_image_length = 65 * num_contigs + 60
-	im = Image.new("RGB", (1000, contigs_image_length+120), (255,255,255))
 
 	contig_source = args.input_f
 
@@ -768,6 +750,7 @@ def insertions_overview_and_histograms():
 				seq.append(line)
 		if name: yield (name, ''.join(seq))
 
+	long_contigs=list()
 	# Read contig fasta file
 	with open(contig_source) as fp:
 		fastalist = list()
@@ -775,7 +758,9 @@ def insertions_overview_and_histograms():
 			innerlist = list()
 			innerlist.append(name_contig.strip('>'))
 			innerlist.append(len(seq_contig))
-			fastalist.append(innerlist)
+			if int(len(seq_contig)) > 1500000:
+				fastalist.append(innerlist)
+				long_contigs.append(name_contig.strip('>').lower())
 	try:
 		max_list = list()
 		for c in fastalist:
@@ -786,6 +771,26 @@ def insertions_overview_and_histograms():
 		max_length = fastalist[0][1]
 
 	mb_max =  int(math.ceil(float(max_length)/1000000))
+
+
+	#Calculate the length of the image acording to the number of contigs
+	num_contigs = int(len(fastalist))
+	
+	contigs_image_length = 65 * num_contigs + 60
+	im = Image.new("RGB", (1000, contigs_image_length+120), (255,255,255))
+
+	#read fasta file to determine number of contigs
+	for i, line in enumerate(flines):
+		if line.startswith('>'): 		#fasta sequences start with '>'
+			sp = line.split(' ')  		#because some names have whitespaces and extra info that is not written to sam file
+			cont = sp[0].strip()  		#strip() is to remove the '\r\n' hidden chars
+			cont = cont[1:]       		#to remove the first char of string (>)
+			if cont not in contigs:
+				contigs.append(cont)
+				innerlist = list()
+				innerlist.append(cont)
+				if cont.lower() in long_contigs:
+					superlist.append(innerlist)
 
 	for c in superlist:
 		for l in fastalist:
