@@ -289,7 +289,7 @@ for variant_info in variants_info:
 					if exon_end_affected == 'left': exon_end_affected = '5\''
 					if exon_end_affected == 'right': exon_end_affected = '3\''
 
-				exonSplicingSignal = ' (putative splicing signal in the ' + exon_end_affected + ' end of exon ' + str(exon_affected) + ' affected)'
+				exonSplicingSignal = ', putative splicing signal in the ' + exon_end_affected + ' end of exon ' + str(exon_affected) + ' affected'
 			
 			else:
 				exonSplicingSignal = ''
@@ -423,9 +423,9 @@ for variant_info in variants_info:
 					result_intron_number = number_of_introns - result_intron_number +1
 			
 			if intron_left_end_hit == True:
-				intron_result = 'intron (putative splicing ' + str(intron_left_end) + ' sequence of intron ' + str(result_intron_number) + ' affected)'
+				intron_result = 'intron, putative splicing ' + str(intron_left_end) + ' sequence of intron ' + str(result_intron_number) + ' affected'
 			elif intron_right_end_hit == True:
-				intron_result = 'intron (putative splicing ' + str(intron_right_end) + ' sequence of intron ' + str(result_intron_number) + ' affected)'
+				intron_result = 'intron, putative splicing ' + str(intron_right_end) + ' sequence of intron ' + str(result_intron_number) + ' affected'
 			else:
 				intron_result = 'intron'
 			
