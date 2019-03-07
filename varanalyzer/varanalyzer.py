@@ -31,6 +31,7 @@
 #
 #
 
+# UPDATE - Fixed splicing detection, SDL
 
 
 
@@ -226,7 +227,7 @@ for variant_info in variants_info:
 		# Obtain and store the exons coordinates of the current gene (this is needed for both exon and intron muations)
 		exon_coords_list = []
 		for feature in gff_array2:
-			if variant_info[9] == feature[4] and feature[3] == 'exon':
+			if variant_info[9] in feature[4] and feature[3] == 'exon':
 				exon_coords = feature[1],feature[2]
 				exon_coords_list.append(exon_coords)
 		
@@ -240,7 +241,7 @@ for variant_info in variants_info:
 		if feature_hit != 'intron':
 
 			# Only take into account the first and last bases of each exon (Brent & Guigo 2004 - Recent advances in gene structure prediction. Current Opinion in Structural Biology)
-			numberOfExonBasesConsidered = 1
+			numberOfExonBasesConsidered = 3
 
 			exon_counter = 1
 			exon_left_end_hit = False
@@ -399,7 +400,7 @@ for variant_info in variants_info:
 				intron_left_coord = exon_coords_list[intron_counter-1][1] + 1 # Because the first intron starts 1 position after the first exon ends
 				distance_left = variant_info[2] - intron_left_coord           # To calculate the distance between the intron beginning and the position of the mutation
 				
-				if 0 <= distance_left < 2:
+				if 0 <= distance_left < 8:
 					intron_left_end_hit = True
 					result_intron_number = intron_counter
 					break
@@ -407,7 +408,7 @@ for variant_info in variants_info:
 				intron_right_coord = exon_coords_list[intron_counter][0] - 1
 				distance_right = intron_right_coord - variant_info[2]
 				
-				if 0 <= distance_right < 2:
+				if 0 <= distance_right < 8:
 					intron_right_end_hit = True
 					result_intron_number = intron_counter
 					break
