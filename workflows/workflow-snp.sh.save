@@ -580,7 +580,8 @@ then
 
 	# (3) Run af-comparison: Intersection of filtered control SNPs with problem reads: outputs VA file with 4 columns of allele absolute frequence
 	{
-		python2 $location/scripts_snp/af-comparison.py -mode $my_mutbackgroud -f2_mut $f1/F2_filtered.va -f2_wt $f1/control_filtered2.va -out $f1/F2_control_comparison.va -f_input $f1/$my_gs -step 1 2>> $my_log_file 
+
+		python2 $location/scripts_snp/af-comparison.py -mode $my_mutbackground -f2_mut $f1/F2_filtered.va -f2_wt $f1/control_filtered2.va -out $f1/F2_control_comparison.va -f_input $f1/$my_gs -step 1 2>> $my_log_file 
 
 	} || {
 		echo $(date "+%F > %T")': Error during execution of af_comparison.py .' >> $my_log_file
@@ -608,7 +609,7 @@ then
 
 		# (5) Re-write F2_control_comparison.va
 		{
-			python2 $location/scripts_snp/af-comparison.py -mode $my_mutbackgroud -f2_mut $f1/F2_filtered.va -f2_wt $f1/control_filtered2.va -out $f1/F2_control_comparison.va -f_input $f1/$my_gs -step 2 2>> $my_log_file 
+			python2 $location/scripts_snp/af-comparison.py -mode $my_mutbackground -f2_mut $f1/F2_filtered.va -f2_wt $f1/control_filtered2.va -out $f1/F2_control_comparison.va -f_input $f1/$my_gs -step 2 2>> $my_log_file 
 
 		} || {
 			echo $(date "+%F > %T")': Error during execution of af_comparison.py .' >> $my_log_file
@@ -621,7 +622,7 @@ then
 		# Filler SNPs: AFs between 0.2 and 0.8 present in both samples, only for drawing 
 
 		{
-			python2 $location/scripts_snp/af-comparison.py -mode $my_mutbackgroud -f2_mut $f1/F2_filtered.va -f2_wt $f1/control_filtered.va -out $f1/filler_variants.va -f_input $f1/$my_gs -step 3 2>> $my_log_file 
+			python2 $location/scripts_snp/af-comparison.py -mode $my_mutbackground -f2_mut $f1/F2_filtered.va -f2_wt $f1/control_filtered.va -out $f1/filler_variants.va -f_input $f1/$my_gs -step 3 2>> $my_log_file 
 
 		} || {
 			echo $(date "+%F > %T")': Error during execution of af_comparison.py .' >> $my_log_file

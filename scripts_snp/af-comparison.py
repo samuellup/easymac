@@ -6,6 +6,8 @@ parser.add_argument('-f2_wt', action="store", dest = 'input_wt')
 parser.add_argument('-out', action="store", dest = 'output')
 parser.add_argument('-f_input', action="store", dest = 'f_input')
 parser.add_argument('-step', action="store", dest = 'step')	
+parser.add_argument('-mode', action="store", dest = 'mode')	
+
 args = parser.parse_args()
 
 
@@ -19,6 +21,7 @@ f2 = open(input2, 'r')
 wt_lines = f2.readlines()	
 f_input = args.f_input
 step = int(args.step)
+mode=args.mode
 
 #Output
 output = args.output
@@ -38,42 +41,103 @@ def read_fasta(fp):
 
 ch = list()
 
-if step == 1 or step == 2: 
-	#From the data of read_fasta, I create a dictionary with the name of the contigs and its lenght
-	with open(f_input) as fp:
-		for name_contig in read_fasta(fp):
-			ch.append(name_contig[0][1:])
+# Mode = noref
+if mode == "noref":
+	if step == 1 or step == 2: 
+		#From the data of read_fasta, I create a dictionary with the name of the contigs and its lenght
+		with open(f_input) as fp:
+			for name_contig in read_fasta(fp):
+				ch.append(name_contig[0][1:])
 
-	for chr in ch:
-		dic_mut = {}
-		dic_wt = {}
-		list_mut = list()
-		list_wt = list()
+		for chr in ch:
+			dic_mut = {}
+			dic_wt = {}
+			list_mut = list()
+			list_wt = list()
+			list_mut_af = list()
 
-		for i, line in enumerate(mut_lines):
-			if not line.startswith('#'):
-				sp = line.split('\t')
-				AF = float(float(sp[6])/(float(sp[6]) + float(sp[5])))
-				if chr == sp[0] and AF > 0.85:
-					dic_mut[sp[1]] = [sp[2], sp[3], sp[4], sp[5], sp[6].strip('\n')]
-					list_mut.append(sp[1])
 
-		for i, line in enumerate(wt_lines):
-			if not line.startswith('#'):
-				sp = line.split('\t')
-				if chr == sp[0]:
-					dic_wt[sp[1]] = [sp[2], sp[3], sp[4], sp[5], sp[6].strip('\n')]
-					list_wt.append(sp[1])
+			for i, line in enumerate(mut_lines):
+				if not line.startswith('#'):
+					inlist=list()
+					sp = line.split('\t')
+					AF = float(float(sp[6])/(float(sp[6]) + float(sp[5])))
+					inlist.append(sp[1])
+					inlist.append(int(AF*100))
 
-		set_2 = frozenset(list_mut)
+					if chr == sp[0] and AF > 0.85:
+						dic_mut[sp[1]] = [sp[2], sp[3], sp[4], sp[5], sp[6].strip('\n')]
+						list_mut.append(sp[1])
+						list_mut_af.append(inlist)						
+			
+			for i, line in enumerate(wt_lines):
+				if not line.startswith('#'):
+					sp = line.split('\t')
+					AF_wt = float(float(sp[6])/(float(sp[6]) + float(sp[5])))
+					AF_wt_100 = int(AF_wt*100)
+					AF_mut_100 = AF_wt_100					
+					for it in list_mut_af:
+						if int(it[0]) == int(sp[1]):
+							AF_mut_100 = int(it[1])
 
-		intersection = [x for x in list_wt if x in set_2]
+					dAF = AF_mut_100 - AF_wt_100
 
-		for i in intersection:
-			if step == 1: 
-				f3.write( str(chr) + '\t' + str(i) + '\t' + str(dic_mut[i][0]) +'\t' +  str(dic_mut[i][1]) +'\t' +  str(dic_mut[i][2]) + '\t' + str(dic_wt[i][3]) +'\t' +  str(dic_wt[i][4]) + '\t' + str(dic_mut[i][3]) + '\t' + str(dic_mut[i][4]) + '\n')
-			if step == 2: 
-				f3.write( str(chr) + '\t' + str(i) + '\t' + str(dic_mut[i][0]) +'\t' +  str(dic_mut[i][1]) +'\t' +  str(dic_mut[i][2]) + '\t'  + str(dic_mut[i][3]) + '\t' + str(dic_mut[i][4]) + '\t' + str(dic_wt[i][3]) +'\t' +  str(dic_wt[i][4]) + '\n')
+					if chr == sp[0] and AF_wt < 0.5 and dAF > 60:
+						dic_wt[sp[1]] = [sp[2], sp[3], sp[4], sp[5], sp[6].strip('\n')]
+						list_wt.append(sp[1])
+
+			set_2 = frozenset(list_mut)
+
+			intersection = [x for x in list_wt if x in set_2]
+
+			if len(intersection) >= 3:
+				for i in intersection:
+					if step == 1: 
+						f3.write( str(chr) + '\t' + str(i) + '\t' + str(dic_mut[i][0]) +'\t' +  str(dic_mut[i][1]) +'\t' +  str(dic_mut[i][2]) + '\t' + str(dic_wt[i][3]) +'\t' +  str(dic_wt[i][4]) + '\t' + str(dic_mut[i][3]) + '\t' + str(dic_mut[i][4]) + '\n')
+					if step == 2: 
+						f3.write( str(chr) + '\t' + str(i) + '\t' + str(dic_mut[i][0]) +'\t' +  str(dic_mut[i][1]) +'\t' +  str(dic_mut[i][2]) + '\t'  + str(dic_mut[i][3]) + '\t' + str(dic_mut[i][4]) + '\t' + str(dic_wt[i][3]) +'\t' +  str(dic_wt[i][4]) + '\n')
+
+
+# Mode = ref
+if mode == "ref":
+	if step == 1 or step == 2: 
+		#From the data of read_fasta, I create a dictionary with the name of the contigs and its lenght
+		with open(f_input) as fp:
+			for name_contig in read_fasta(fp):
+				ch.append(name_contig[0][1:])
+
+		for chr in ch:
+			dic_mut = {}
+			dic_wt = {}
+			list_mut = list()
+			list_wt = list()
+
+			for i, line in enumerate(mut_lines):
+				if not line.startswith('#'):
+					sp = line.split('\t')
+					AF = float(float(sp[6])/(float(sp[6]) + float(sp[5])))
+					if chr == sp[0] and AF > 0.85:
+						dic_mut[sp[1]] = [sp[2], sp[3], sp[4], sp[5], sp[6].strip('\n')]
+						list_mut.append(sp[1])
+
+			for i, line in enumerate(wt_lines):
+				if not line.startswith('#'):
+					sp = line.split('\t')
+					if chr == sp[0]:
+						dic_wt[sp[1]] = [sp[2], sp[3], sp[4], sp[5], sp[6].strip('\n')]
+						list_wt.append(sp[1])
+
+			set_2 = frozenset(list_mut)
+
+			intersection = [x for x in list_wt if x in set_2]
+
+
+			if len(intersection) >= 3:
+				for i in intersection:
+					if step == 1: 
+						f3.write( str(chr) + '\t' + str(i) + '\t' + str(dic_mut[i][0]) +'\t' +  str(dic_mut[i][1]) +'\t' +  str(dic_mut[i][2]) + '\t' + str(dic_wt[i][3]) +'\t' +  str(dic_wt[i][4]) + '\t' + str(dic_mut[i][3]) + '\t' + str(dic_mut[i][4]) + '\n')
+					if step == 2: 
+						f3.write( str(chr) + '\t' + str(i) + '\t' + str(dic_mut[i][0]) +'\t' +  str(dic_mut[i][1]) +'\t' +  str(dic_mut[i][2]) + '\t'  + str(dic_mut[i][3]) + '\t' + str(dic_mut[i][4]) + '\t' + str(dic_wt[i][3]) +'\t' +  str(dic_wt[i][4]) + '\n')
 
 
 if step == 3: 

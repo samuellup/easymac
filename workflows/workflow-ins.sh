@@ -532,7 +532,7 @@ echo $(date "+%F > %T")': Report file created.' >> $my_log_file
 
 #Cleanup
 #rm -rf $f1/sim_data
-rm -f $f1/*.fq
+#rm -f $f1/*.fq
 rm -f $f1/*.bt2
 
 echo $exit_code

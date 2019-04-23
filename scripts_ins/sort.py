@@ -42,26 +42,6 @@ for i, line in enumerate(fasta_lines):
 		if cont not in contigs:
 			contigs.append(cont)
 
-
-# Function to parse fasta file (based on one of the Biopython IOs)
-def read_fasta(fp):
-	name, seq = None, []
-	for line in fp:
-		line = line.rstrip()
-		if line.startswith('>'):
-			if name: yield (name, ''.join(seq))
-			name, seq = line, []
-		else:
-			seq.append(line)
-	if name: yield (name, ''.join(seq))
-
-with open(finput) as fp:
-	long_contigs = list()
-	for name_contig, seq_contig in read_fasta(fp):
-		if int(len(seq_contig)) > 1500000: 
-			long_contigs.append(name_contig.strip('>').lower())
-
-
 #Create a list from the input file
 for i, line in enumerate(lines):
 	if not line.startswith('@'):
@@ -184,11 +164,11 @@ if args.mode == 'pe':
 		max_pos = 0
 		min_pos = float('inf')
 		local = "false"
-		long_contig = "false"
+
 		for l, line in enumerate(lines):
 			if not line.startswith('@'):
 				sp = line.split()
-				if int(sp[2]) == insertion: 													# and sp[0].strip() == "PAIRED":	
+				if int(sp[2]) == insertion: 														# and sp[0].strip() == "PAIRED":	
 					#1st criterion: insertion must have forward and reverse supporting reads
 					read_direction = sp[5].strip("_RD")
 					if read_direction not in directions and "TOTAL" not in read_direction:
@@ -208,9 +188,6 @@ if args.mode == 'pe':
 				#4th criterion: there must be at least one local alignment supporting the insertion
 				if int(sp[2]) == insertion and "LOCAL" in str(sp[0].strip()):	
 					local = "true"
-				#5th criterion: the chromosome must be in long_contigs (defined above)
-				if str(sp[1]).strip('>').lower() in long_contigs:	
-					long_contig = "true"
 
 		threshold = 0
 		if len(directions) >= 2:
@@ -222,17 +199,16 @@ if args.mode == 'pe':
 
 		if threshold >= 2:											#threshold >= 2 for default filtering 
 			if local == "true":
-				if long_contig == "true":
-					insertions_final.append(insertion)
+				insertions_final.append(insertion)
 
-if args.mode == 'se': 
+elif args.mode == 'se': 
 	for insertion in insertions_raw:
 		max_RD = 0
 		directions = list()
 		max_pos = 0
 		min_pos = float('inf')
 		span = None
-		long_contig = "false"
+
 		for l, line in enumerate(lines):
 			if not line.startswith('@'):
 				sp = line.split()
@@ -253,10 +229,6 @@ if args.mode == 'se':
 						min_pos = int(sp[3])
 					span = max_pos - min_pos
 
-				#4th criterion: the chromosome must be in long_contigs (defined above)
-				if str(sp[1]).strip('>').lower() in long_contigs:	
-					long_contig = "true"
-
 		threshold = 0
 		if len(directions) >= 2:
 			threshold = threshold + 1
@@ -265,9 +237,8 @@ if args.mode == 'se':
 		if span > 200:
 			threshold = threshold + 1
 
-		if threshold >= 2:								#threshold >= 2 for default filtering 
-			if long_contig == "true":												
-				insertions_final.append(insertion)
+		if threshold >= 2:												#threshold >= 2 for default filtering 
+			insertions_final.append(insertion)
 
 f1.close()
 f1 = open(input, 'w')
