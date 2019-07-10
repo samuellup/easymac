@@ -104,7 +104,7 @@ cd virtualenv-15.1.0/
 
 # Install Pillow with pip
 [ -d cache ] || mkdir cache
-easymap-env/bin/pip install Pillow --cache-dir cache
+easymap-env/bin/pip -qq install Pillow --cache-dir cache
 
 cd ../..
 

@@ -287,6 +287,7 @@ echo $(date "+%F > %T")': varanalyzer.py finished.' >> $my_log_file
 
 #_______________________________________________________________________Primer generation module___________________________________________________________________________________
 
+{
 if [ $(wc -l < $f1/varanalyzer_output.txt) -gt 1 ]
 then 
 	#Run SAM-FQ
@@ -299,9 +300,9 @@ then
 
 	} || {
 		echo $(date "+%F > %T")': error:ins-primers.py' >> $my_log_file
-		exit_code=1
-		echo $exit_code
-		exit
+		#exit_code=1
+		#echo $exit_code
+		#exit
 	}
 
 	#Run alignment
@@ -315,9 +316,9 @@ then
 
 			} || {
 				echo $(date "+%F > %T")': error: Bowtie2 - primers' >> $my_log_file
-				exit_code=1
-				echo $exit_code
-				exit
+				#exit_code=1
+				#echo $exit_code
+				#exit
 			}
 		fi
 	done
@@ -347,9 +348,9 @@ then
 					
 				} || {
 					echo $(date "+%F > %T") ' : sam-file-check.py failed. See log files.' >> $my_log_file
-					exit_code=1
-					echo $exit_code
-					exit
+					#exit_code=1
+					#echo $exit_code
+					#exit
 				}
 
 			    #SAM to BAM
@@ -369,9 +370,9 @@ then
 		done
 	}||{
 		echo $(date "+%F > %T")': Error. The consensus sequence of an insertion flank could not be created.' >> $my_log_file
-		exit_code=1
-		echo $exit_code
-		exit
+		#exit_code=1
+		#echo $exit_code
+		#exit
 	}
 
 fi
@@ -385,10 +386,12 @@ rm -f ./user_data/*.fai
 {
 	python2 $location/primers/primer-generation.py -file $f1/varanalyzer_output.txt -fasta $f1/$my_gs -fq $f1/all_insertions_cns.fq  -out $f3/insertions_output.txt -mode $(wc -l < $f1/varanalyzer_output.txt) 2>> $my_log_file
 }|| {
-	echo $(date "+%F > %T")': Error. primer-generation.py failed. ' >> $my_log_file
-	exit_code=1
-	echo $exit_code
-	exit
+	echo $(date "+%F > %T")': Error. primer-generation.py failed, proceeding to bypass module.' >> $my_log_file
+        python2 $location/primers/primer-bypass.py  -input  $f1/varanalyzer_output.txt  -out $f3/insertions_output.txt
+	
+	#exit_code=1
+	#echo $exit_code
+	#exit
 }
 echo $(date "+%F > %T")': Primer-generation.py module finished.' >> $my_log_file
 
@@ -401,14 +404,18 @@ then
 		python2 $location/scripts_ins/extend-ins-info.py --project-name $project_name 2>> $my_log_file
 	}|| {
 		echo $(date "+%F > %T")': Error. extend-ins-info.py failed. ' >> $my_log_file
-		exit_code=1
-		echo $exit_code
-		exit
+	        python2 $location/primers/primer-bypass.py  -input  $f1/varanalyzer_output.txt  -out $f3/insertions_output.txt
+		#exit_code=1
+		#echo $exit_code
+		#exit
 	}
 	echo $(date "+%F > %T")': extend-ins-info.py module finished.' >> $my_log_file
 
 fi
+} || {
+	echo $(date "+%F > %T")': Error in primer generation module, proceeding to bypass. ' >> $my_log_file
 
+}
 
 #_______________________________________________________________________Output generation___________________________________________________________________________________
 
@@ -531,8 +538,8 @@ fi
 echo $(date "+%F > %T")': Report file created.' >> $my_log_file
 
 #Cleanup
-#rm -rf $f1/sim_data
-#rm -f $f1/*.fq
+rm -rf $f1/sim_data
+rm -f $f1/*.fq
 rm -f $f1/*.bt2
 
 echo $exit_code

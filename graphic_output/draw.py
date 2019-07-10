@@ -758,7 +758,7 @@ def insertions_overview_and_histograms():
 			innerlist = list()
 			innerlist.append(name_contig.strip('>'))
 			innerlist.append(len(seq_contig))
-			if int(len(seq_contig)) > 1500000:
+			if int(len(seq_contig)) > 700000:
 				fastalist.append(innerlist)
 				long_contigs.append(name_contig.strip('>').lower())
 	try:
@@ -830,6 +830,9 @@ def insertions_overview_and_histograms():
 	fnt3 = ImageFont.truetype('fonts/VeraMono.ttf', 14)
 	tab = 50
 	number = 1
+
+	#sort superlist (8-7-19 fix)
+	superlist.sort(key = lambda x: x[0]) 
 
 	#Drawing the chromosomes:
 	for c in superlist:
